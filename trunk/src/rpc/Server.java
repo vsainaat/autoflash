@@ -1,7 +1,8 @@
-package rpc;
+/**
+ * 这个类是Server类，它的功能是初始化服务器端并启动Ice服务。这这个类里并没有具体的工作，应当由ljb来提供一个CoreService类并完成真正的数据操作。
+ */
 
-import java.util.HashMap;
-import java.util.Random;
+package rpc;
 
 import rpc.slice.Activity;
 import rpc.slice.BatteryInfo;
@@ -14,55 +15,47 @@ import rpc.slice.VehicleInfo;
 import rpc.slice.VehicleQueryCondition;
 
 public class Server extends rpc.slice._ClientServiceDisp {
+	private MockCoreService service;
+	
 	Server () {
-		hmStations_ = new HashMap<Integer, StationInfo>();
-		hmVehicles_ = new HashMap<Integer, VehicleInfo>();
-    	hmOpenness_ = new HashMap<Integer, Boolean>();
+		service = new MockCoreService();
 	}
 	
 	/** For Power Station */
 	// The amount may differ from the data in the database, and need to be measured in station.
 	// The amount may differ from the data in the database, and need to be measured in station.
 	public double rentBattery(int stationID, int vehicleID, int batteryID, double amount, Ice.Current current) { 
-		System.out.printf("Car %d rent battery %d in station %d\n", vehicleID, batteryID, stationID);
-		return amount * 9.9; 
+		return service.rentBattery(stationID, vehicleID, batteryID, amount);
 	}
 	// The remaining amount is measured in station.
 	public double returnBattery(int stationID, int vehicleID, int batteryID, double amount, Ice.Current current) { 
-		System.out.printf("Car %d return battery %d in station %d\n", vehicleID, batteryID, stationID);
-		return amount * 9.9;
+		return service.returnBattery(stationID, vehicleID, batteryID, amount);
 	}
 	 
     // Move battery, return the battery information.
-	public BatteryInfo moveBatteryToStation(int stationID, int batteryID, Ice.Current current) { return null; }
-	public BatteryInfo moveBatteryFromStation(int stationID, int batteryID, Ice.Current current) { return null; }
+	public BatteryInfo moveBatteryToStation(int stationID, int batteryID, Ice.Current current) { 
+		return service.moveBatteryFromStation(stationID, batteryID); 
+	}
+	public BatteryInfo moveBatteryFromStation(int stationID, int batteryID, Ice.Current current) { 
+		return service.moveBatteryFromStation(stationID, batteryID); 
+	}
 
     // Report damaged battery.
-    public void reportDamagedBattery(int stationID, int batteryID, Ice.Current current) { }
+    public void reportDamagedBattery(int stationID, int batteryID, Ice.Current current) { 
+    	service.reportDamagedBattery(stationID, batteryID);
+    }
 
     // For a car first change battery, register, return vehicle ID.
     public int registerVehicle(int stationID, VehicleInfo info, Ice.Current current) {    
-	    System.out.println("Register vehicle.");
-		Random rand = new Random();
-		do {
-			info.ID = rand.nextInt(999);
-		} while(hmStations_.containsKey(info.ID));
-		System.out.println("Get VehicleID " + info.ID);
-			
-		hmVehicles_.put(info.ID, info);
-		hmOpenness_.put(info.ID, false);
-		return info.ID;
+	    return service.registerVehicle(stationID, info);
 	}
 
     public void openStation(int stationID, Ice.Current current) { 
-    	hmOpenness_.put(stationID, true);
-    	System.out.printf("Station %d opened.\n", stationID);
+    	service.openStation(stationID);
     }
     public void closeStation(int stationID, Ice.Current current) {
-    	hmOpenness_.put(stationID, false);
-    	System.out.printf("Station %d closed.\n", stationID);
+    	service.closeStation(stationID);
     }
-
 
     /** For Depot */
     // Move battery, return the battery information.
@@ -72,64 +65,78 @@ public class Server extends rpc.slice._ClientServiceDisp {
     // Charge battery.
 	// The currentAmount record the current electricity amount of the battery.
 	// The useAmount record the electricity amount used for change since last report.
-	public void charge(int stationID, int batteryID, double currentAmount, double useAmount, Ice.Current current) {}
+	public void charge(int stationID, int batteryID, double currentAmount, double useAmount, Ice.Current current) {
+		service.charge(stationID, batteryID, currentAmount, useAmount);
+	}
 	
 	// To discard a battery.
-	public void discard(int BatteryID, Ice.Current current) {}
+	public void discard(int BatteryID, Ice.Current current) {
+		service.discard(BatteryID);
+	}
 	
     public void openDepot(int depotID, Ice.Current current) {
-    	;
+    	service.openDepot(depotID);
     }
     public void closeDepot(int depotID, Ice.Current current) { 
-    	;
+    	service.closeDepot(depotID);
     }
 
     /** For battery supplier */
 	// For battery suppler to purchase a new battery.
-	public void purchase(BatteryInfo info, Ice.Current current) { }
+	public void purchase(BatteryInfo info, Ice.Current current) {
+		service.purchase(info);
+	}
 	
     /** For administrator */
 	// Use integer value to represent time
-    public Activity[] queryActivities(int start, int end, Ice.Current current) { return null; }
-	public Activity[] queryBatteryActivities(int batteryID, int start, int end, Ice.Current current) { return null; }
-	public Activity[] queryStationActivities(int staionID, int start, int end, Ice.Current current) { return null; }
-	public Activity[] queryDepotActivities(int staionID, int start, int end, Ice.Current current) { return null; }
+    public Activity[] queryActivities(int start, int end, Ice.Current current) { 
+    	return service.queryActivities(start, end); 
+    }
+	public Activity[] queryBatteryActivities(int batteryID, int start, int end, Ice.Current current) { 
+		return service.queryBatteryActivities(batteryID, start, end); 
+	}
+	public Activity[] queryStationActivities(int staionID, int start, int end, Ice.Current current) { 
+		return service.queryStationActivities(staionID, start, end); 
+		}
+	public Activity[] queryDepotActivities(int staionID, int start, int end, Ice.Current current) { 
+		return service.queryDepotActivities(staionID, start, end); 
+	}
 
 	public StationInfo[] queryStations(StationQueryCondition c, Ice.Current current) { 
-		return hmStations_.values().toArray(new StationInfo[0]);
+		return service.queryStations(c);
 	}
 	
-	public DepotInfo[] queryDepots(DepotQueryCondition c, Ice.Current current) { return null; }
-	public BatteryInfo[] queryBatteries(BatteryQueryCondition c, Ice.Current current) { return null; }
+	public DepotInfo[] queryDepots(DepotQueryCondition c, Ice.Current current) { 
+		return service.queryDepots(c); 
+	}
+	public BatteryInfo[] queryBatteries(BatteryQueryCondition c, Ice.Current current) { 
+		return service.queryBatteries(c); 
+	}
 	public VehicleInfo[] queryVehicles(VehicleQueryCondition c, Ice.Current current) {
-		return hmVehicles_.values().toArray(new VehicleInfo[0]);
+		return service.queryVehicles(c);
 	}
 
     // After registration, return the ID assigned
     public int registerStation(StationInfo info, Ice.Current current) {
-    	System.out.println("Register station.");
-    	Random rand = new Random();
-    	do {
-    		info.ID = rand.nextInt(99);
-    	} while(hmStations_.containsKey(info.ID));
-    	System.out.println("Get StationID " + info.ID);
-    		
-    	hmStations_.put(info.ID, info);
-    	hmOpenness_.put(info.ID, false);
-    	return info.ID;
+    	return service.registerStation(info);
     }
     
-    public int registerDepot(DepotInfo info, Ice.Current current) { return 0; }
-    public void unregisterStation(int stationID, Ice.Current current) { }
-    public void setStation(int stationID, StationInfo info, Ice.Current current) { }
-    public void unregisterDepot(DepotInfo info, Ice.Current current) { }
-    public void setDepot(int stationID, DepotInfo info, Ice.Current current) { }
-
+    public int registerDepot(DepotInfo info, Ice.Current current) { 
+    	return service.registerDepot(info); 
+    }
+    public void unregisterStation(int stationID, Ice.Current current) { 
+    	service.unregisterStation(stationID);
+    }
+    public void setStation(int stationID, StationInfo info, Ice.Current current) {
+    	service.setStation(stationID, info);
+    }
+    public void unregisterDepot(DepotInfo info, Ice.Current current) {
+    	service.unregisterDepot(info);
+    }
+    public void setDepot(int stationID, DepotInfo info, Ice.Current current) { 
+    	service.setDepot(stationID, info);
+    }
     
-    private HashMap<Integer, StationInfo> hmStations_;   
-    private HashMap<Integer, VehicleInfo> hmVehicles_;
-    private HashMap<Integer, Boolean> hmOpenness_;
- 
 	/**
 	 * @param args
 	 */
