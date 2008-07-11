@@ -1,6 +1,6 @@
 package安排:
-rpc.slice	由Ice生成的文件
-rpc			用于远程rpc的文件，并向client提供服务
-mock		模拟环境
-server		服务器端文件，向外只需要提供一个CoreService
-client		各个客户端的文件
+autoflash.rpc.slice	由Ice生成的文件
+autoflash.rpc			用于远程rpc的文件，并向client提供服务
+autoflash.mock		模拟环境
+autoflash.server		服务器端文件，向外只需要提供一个CoreService
+autoflash.client		各个客户端的文件
