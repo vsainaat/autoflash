@@ -11,18 +11,18 @@
 
 package autoflash.rpc.slice;
 
-public final class BatteryStatusHolder
+public final class BatteryStateHolder
 {
     public
-    BatteryStatusHolder()
+    BatteryStateHolder()
     {
     }
 
     public
-    BatteryStatusHolder(BatteryStatus value)
+    BatteryStateHolder(BatteryState value)
     {
         this.value = value;
     }
 
-    public BatteryStatus value;
+    public BatteryState value;
 }

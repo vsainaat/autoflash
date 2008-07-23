@@ -69,9 +69,9 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     }
 
     public final void
-    charge(String stationID, String batteryID, double currentAmount, double useAmount)
+    charge(String depotID, String batteryID, double currentAmount, double useAmount)
     {
-        charge(stationID, batteryID, currentAmount, useAmount, null);
+        charge(depotID, batteryID, currentAmount, useAmount, null);
     }
 
     public final void
@@ -92,28 +92,28 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         discard(depotID, batteryID, null);
     }
 
-    public final BatteryInfo
+    public final void
     moveBatteryFromDepot(String depotID, String batteryID)
     {
-        return moveBatteryFromDepot(depotID, batteryID, null);
+        moveBatteryFromDepot(depotID, batteryID, null);
     }
 
-    public final BatteryInfo
+    public final void
     moveBatteryFromStation(String stationID, String batteryID)
     {
-        return moveBatteryFromStation(stationID, batteryID, null);
+        moveBatteryFromStation(stationID, batteryID, null);
     }
 
-    public final BatteryInfo
+    public final void
     moveBatteryToDepot(String depotID, String batteryID)
     {
-        return moveBatteryToDepot(depotID, batteryID, null);
+        moveBatteryToDepot(depotID, batteryID, null);
     }
 
-    public final BatteryInfo
+    public final void
     moveBatteryToStation(String stationID, String batteryID)
     {
-        return moveBatteryToStation(stationID, batteryID, null);
+        moveBatteryToStation(stationID, batteryID, null);
     }
 
     public final void
@@ -128,10 +128,10 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         openStation(stationID, null);
     }
 
-    public final void
+    public final String
     purchase(BatteryInfo info)
     {
-        purchase(info, null);
+        return purchase(info, null);
     }
 
     public final Activity[]
@@ -285,13 +285,11 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
-        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        BatteryInfo __ret = __obj.moveBatteryToStation(stationID, batteryID, __current);
-        __ret.__write(__os);
+        __obj.moveBatteryToStation(stationID, batteryID, __current);
         return IceInternal.DispatchStatus.DispatchOK;
     }
 
@@ -300,13 +298,11 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
-        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        BatteryInfo __ret = __obj.moveBatteryFromStation(stationID, batteryID, __current);
-        __ret.__write(__os);
+        __obj.moveBatteryFromStation(stationID, batteryID, __current);
         return IceInternal.DispatchStatus.DispatchOK;
     }
 
@@ -366,13 +362,11 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
-        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        BatteryInfo __ret = __obj.moveBatteryToDepot(depotID, batteryID, __current);
-        __ret.__write(__os);
+        __obj.moveBatteryToDepot(depotID, batteryID, __current);
         return IceInternal.DispatchStatus.DispatchOK;
     }
 
@@ -381,13 +375,11 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
-        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        BatteryInfo __ret = __obj.moveBatteryFromDepot(depotID, batteryID, __current);
-        __ret.__write(__os);
+        __obj.moveBatteryFromDepot(depotID, batteryID, __current);
         return IceInternal.DispatchStatus.DispatchOK;
     }
 
@@ -396,15 +388,15 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
-        String stationID;
-        stationID = __is.readString();
+        String depotID;
+        depotID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
         double currentAmount;
         currentAmount = __is.readDouble();
         double useAmount;
         useAmount = __is.readDouble();
-        __obj.charge(stationID, batteryID, currentAmount, useAmount, __current);
+        __obj.charge(depotID, batteryID, currentAmount, useAmount, __current);
         return IceInternal.DispatchStatus.DispatchOK;
     }
 
@@ -448,10 +440,12 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         BatteryInfo info;
         info = new BatteryInfo();
         info.__read(__is);
-        __obj.purchase(info, __current);
+        String __ret = __obj.purchase(info, __current);
+        __os.writeString(__ret);
         return IceInternal.DispatchStatus.DispatchOK;
     }
 

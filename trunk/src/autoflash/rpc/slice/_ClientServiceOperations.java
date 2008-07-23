@@ -17,9 +17,9 @@ public interface _ClientServiceOperations
 
     double returnBattery(String stationID, String vechildID, String batteryID, double amount, Ice.Current __current);
 
-    BatteryInfo moveBatteryToStation(String stationID, String batteryID, Ice.Current __current);
+    void moveBatteryToStation(String stationID, String batteryID, Ice.Current __current);
 
-    BatteryInfo moveBatteryFromStation(String stationID, String batteryID, Ice.Current __current);
+    void moveBatteryFromStation(String stationID, String batteryID, Ice.Current __current);
 
     void reportDamagedBattery(String stationID, String batteryID, Ice.Current __current);
 
@@ -29,11 +29,11 @@ public interface _ClientServiceOperations
 
     void closeStation(String stationID, Ice.Current __current);
 
-    BatteryInfo moveBatteryToDepot(String depotID, String batteryID, Ice.Current __current);
+    void moveBatteryToDepot(String depotID, String batteryID, Ice.Current __current);
 
-    BatteryInfo moveBatteryFromDepot(String depotID, String batteryID, Ice.Current __current);
+    void moveBatteryFromDepot(String depotID, String batteryID, Ice.Current __current);
 
-    void charge(String stationID, String batteryID, double currentAmount, double useAmount, Ice.Current __current);
+    void charge(String depotID, String batteryID, double currentAmount, double useAmount, Ice.Current __current);
 
     void discard(String depotID, String batteryID, Ice.Current __current);
 
@@ -41,7 +41,7 @@ public interface _ClientServiceOperations
 
     void closeDepot(String depotID, Ice.Current __current);
 
-    void purchase(BatteryInfo info, Ice.Current __current);
+    String purchase(BatteryInfo info, Ice.Current __current);
 
     Activity[] queryActivities(int start, int end, Ice.Current __current);
 

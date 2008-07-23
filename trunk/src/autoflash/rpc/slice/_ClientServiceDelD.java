@@ -14,7 +14,7 @@ package autoflash.rpc.slice;
 public final class _ClientServiceDelD extends Ice._ObjectDelD implements _ClientServiceDel
 {
     public void
-    charge(String stationID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx)
+    charge(String depotID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
         Ice.Current __current = new Ice.Current();
@@ -39,7 +39,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
                 }
                 try
                 {
-                    __servant.charge(stationID, batteryID, currentAmount, useAmount, __current);
+                    __servant.charge(depotID, batteryID, currentAmount, useAmount, __current);
                     return;
                 }
                 catch(Ice.LocalException __ex)
@@ -177,7 +177,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
         }
     }
 
-    public BatteryInfo
+    public void
     moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
@@ -203,7 +203,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
                 }
                 try
                 {
-                    return __servant.moveBatteryFromDepot(depotID, batteryID, __current);
+                    __servant.moveBatteryFromDepot(depotID, batteryID, __current);
+                    return;
                 }
                 catch(Ice.LocalException __ex)
                 {
@@ -217,7 +218,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
         }
     }
 
-    public BatteryInfo
+    public void
     moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
@@ -243,7 +244,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
                 }
                 try
                 {
-                    return __servant.moveBatteryFromStation(stationID, batteryID, __current);
+                    __servant.moveBatteryFromStation(stationID, batteryID, __current);
+                    return;
                 }
                 catch(Ice.LocalException __ex)
                 {
@@ -257,7 +259,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
         }
     }
 
-    public BatteryInfo
+    public void
     moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
@@ -283,7 +285,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
                 }
                 try
                 {
-                    return __servant.moveBatteryToDepot(depotID, batteryID, __current);
+                    __servant.moveBatteryToDepot(depotID, batteryID, __current);
+                    return;
                 }
                 catch(Ice.LocalException __ex)
                 {
@@ -297,7 +300,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
         }
     }
 
-    public BatteryInfo
+    public void
     moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
@@ -323,7 +326,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
                 }
                 try
                 {
-                    return __servant.moveBatteryToStation(stationID, batteryID, __current);
+                    __servant.moveBatteryToStation(stationID, batteryID, __current);
+                    return;
                 }
                 catch(Ice.LocalException __ex)
                 {
@@ -419,7 +423,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
         }
     }
 
-    public void
+    public String
     purchase(BatteryInfo info, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
@@ -445,8 +449,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
                 }
                 try
                 {
-                    __servant.purchase(info, __current);
-                    return;
+                    return __servant.purchase(info, __current);
                 }
                 catch(Ice.LocalException __ex)
                 {

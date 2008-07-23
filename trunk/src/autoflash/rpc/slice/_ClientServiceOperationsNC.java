@@ -17,9 +17,9 @@ public interface _ClientServiceOperationsNC
 
     double returnBattery(String stationID, String vechildID, String batteryID, double amount);
 
-    BatteryInfo moveBatteryToStation(String stationID, String batteryID);
+    void moveBatteryToStation(String stationID, String batteryID);
 
-    BatteryInfo moveBatteryFromStation(String stationID, String batteryID);
+    void moveBatteryFromStation(String stationID, String batteryID);
 
     void reportDamagedBattery(String stationID, String batteryID);
 
@@ -29,11 +29,11 @@ public interface _ClientServiceOperationsNC
 
     void closeStation(String stationID);
 
-    BatteryInfo moveBatteryToDepot(String depotID, String batteryID);
+    void moveBatteryToDepot(String depotID, String batteryID);
 
-    BatteryInfo moveBatteryFromDepot(String depotID, String batteryID);
+    void moveBatteryFromDepot(String depotID, String batteryID);
 
-    void charge(String stationID, String batteryID, double currentAmount, double useAmount);
+    void charge(String depotID, String batteryID, double currentAmount, double useAmount);
 
     void discard(String depotID, String batteryID);
 
@@ -41,7 +41,7 @@ public interface _ClientServiceOperationsNC
 
     void closeDepot(String depotID);
 
-    void purchase(BatteryInfo info);
+    String purchase(BatteryInfo info);
 
     Activity[] queryActivities(int start, int end);
 
