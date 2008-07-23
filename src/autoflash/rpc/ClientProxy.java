@@ -1,10 +1,11 @@
-package autoflash.rpc;
-
 /**
  * ClientProxy
- * 	Õâ¸öÀàÊÇIce¶Ô¿Í»§¶ËµÄ½Ó¿Ú£¬ËùÓĞĞèÒªrpcµÄ¿Í»§¶Ë²Ù×÷¶¼µ÷ÓÃÕâ¸öÀàµÄ½Ó¿Ú¡£
- * 	Õâ¸öÀà¶ÔÍâÊÇÒ»¸ösingleton£¬ËùÓĞµÄ²Ù×÷¾ä±úÍ¨¹ıservice()»ñµÃ¡£
+ * 	è¿™ä¸ªç±»æ˜¯Iceå¯¹å®¢æˆ·ç«¯çš„æ¥å£ï¼Œæ‰€æœ‰éœ€è¦rpcçš„å®¢æˆ·ç«¯æ“ä½œéƒ½è°ƒç”¨è¿™ä¸ªç±»çš„æ¥å£ã€‚
+ * 	è¿™ä¸ªç±»å¯¹å¤–æ˜¯ä¸€ä¸ªsingletonï¼Œæ‰€æœ‰çš„æ“ä½œå¥æŸ„é€šè¿‡service()è·å¾—ã€‚
  */
+
+package autoflash.rpc;
+
 public class ClientProxy {
 	private autoflash.rpc.slice.ClientServicePrx service_;
 	private Ice.Communicator ic_;

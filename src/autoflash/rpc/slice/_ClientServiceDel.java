@@ -19,10 +19,10 @@ public interface _ClientServiceDel extends Ice._ObjectDel
     double returnBattery(String stationID, String vechildID, String batteryID, double amount, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
-    BatteryInfo moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
+    void moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
-    BatteryInfo moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
+    void moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
     void reportDamagedBattery(String stationID, String batteryID, java.util.Map<String, String> __ctx)
@@ -37,13 +37,13 @@ public interface _ClientServiceDel extends Ice._ObjectDel
     void closeStation(String stationID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
-    BatteryInfo moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
+    void moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
-    BatteryInfo moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
+    void moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
-    void charge(String stationID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx)
+    void charge(String depotID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
     void discard(String depotID, String batteryID, java.util.Map<String, String> __ctx)
@@ -55,7 +55,7 @@ public interface _ClientServiceDel extends Ice._ObjectDel
     void closeDepot(String depotID, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
-    void purchase(BatteryInfo info, java.util.Map<String, String> __ctx)
+    String purchase(BatteryInfo info, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
     Activity[] queryActivities(int start, int end, java.util.Map<String, String> __ctx)

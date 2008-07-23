@@ -14,20 +14,20 @@ package autoflash.rpc.slice;
 public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implements ClientServicePrx
 {
     public void
-    charge(String stationID, String batteryID, double currentAmount, double useAmount)
+    charge(String depotID, String batteryID, double currentAmount, double useAmount)
     {
-        charge(stationID, batteryID, currentAmount, useAmount, null, false);
+        charge(depotID, batteryID, currentAmount, useAmount, null, false);
     }
 
     public void
-    charge(String stationID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx)
+    charge(String depotID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx)
     {
-        charge(stationID, batteryID, currentAmount, useAmount, __ctx, true);
+        charge(depotID, batteryID, currentAmount, useAmount, __ctx, true);
     }
 
     @SuppressWarnings("unchecked")
     private void
-    charge(String stationID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    charge(String depotID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -41,7 +41,7 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
             {
                 __delBase = __getDelegate();
                 _ClientServiceDel __del = (_ClientServiceDel)__delBase;
-                __del.charge(stationID, batteryID, currentAmount, useAmount, __ctx);
+                __del.charge(depotID, batteryID, currentAmount, useAmount, __ctx);
                 return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
@@ -181,20 +181,20 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
         }
     }
 
-    public BatteryInfo
+    public void
     moveBatteryFromDepot(String depotID, String batteryID)
     {
-        return moveBatteryFromDepot(depotID, batteryID, null, false);
+        moveBatteryFromDepot(depotID, batteryID, null, false);
     }
 
-    public BatteryInfo
+    public void
     moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
     {
-        return moveBatteryFromDepot(depotID, batteryID, __ctx, true);
+        moveBatteryFromDepot(depotID, batteryID, __ctx, true);
     }
 
     @SuppressWarnings("unchecked")
-    private BatteryInfo
+    private void
     moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
@@ -207,10 +207,10 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
             Ice._ObjectDel __delBase = null;
             try
             {
-                __checkTwowayOnly("moveBatteryFromDepot");
                 __delBase = __getDelegate();
                 _ClientServiceDel __del = (_ClientServiceDel)__delBase;
-                return __del.moveBatteryFromDepot(depotID, batteryID, __ctx);
+                __del.moveBatteryFromDepot(depotID, batteryID, __ctx);
+                return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
             {
@@ -223,20 +223,20 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
         }
     }
 
-    public BatteryInfo
+    public void
     moveBatteryFromStation(String stationID, String batteryID)
     {
-        return moveBatteryFromStation(stationID, batteryID, null, false);
+        moveBatteryFromStation(stationID, batteryID, null, false);
     }
 
-    public BatteryInfo
+    public void
     moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
     {
-        return moveBatteryFromStation(stationID, batteryID, __ctx, true);
+        moveBatteryFromStation(stationID, batteryID, __ctx, true);
     }
 
     @SuppressWarnings("unchecked")
-    private BatteryInfo
+    private void
     moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
@@ -249,10 +249,10 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
             Ice._ObjectDel __delBase = null;
             try
             {
-                __checkTwowayOnly("moveBatteryFromStation");
                 __delBase = __getDelegate();
                 _ClientServiceDel __del = (_ClientServiceDel)__delBase;
-                return __del.moveBatteryFromStation(stationID, batteryID, __ctx);
+                __del.moveBatteryFromStation(stationID, batteryID, __ctx);
+                return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
             {
@@ -265,20 +265,20 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
         }
     }
 
-    public BatteryInfo
+    public void
     moveBatteryToDepot(String depotID, String batteryID)
     {
-        return moveBatteryToDepot(depotID, batteryID, null, false);
+        moveBatteryToDepot(depotID, batteryID, null, false);
     }
 
-    public BatteryInfo
+    public void
     moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
     {
-        return moveBatteryToDepot(depotID, batteryID, __ctx, true);
+        moveBatteryToDepot(depotID, batteryID, __ctx, true);
     }
 
     @SuppressWarnings("unchecked")
-    private BatteryInfo
+    private void
     moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
@@ -291,10 +291,10 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
             Ice._ObjectDel __delBase = null;
             try
             {
-                __checkTwowayOnly("moveBatteryToDepot");
                 __delBase = __getDelegate();
                 _ClientServiceDel __del = (_ClientServiceDel)__delBase;
-                return __del.moveBatteryToDepot(depotID, batteryID, __ctx);
+                __del.moveBatteryToDepot(depotID, batteryID, __ctx);
+                return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
             {
@@ -307,20 +307,20 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
         }
     }
 
-    public BatteryInfo
+    public void
     moveBatteryToStation(String stationID, String batteryID)
     {
-        return moveBatteryToStation(stationID, batteryID, null, false);
+        moveBatteryToStation(stationID, batteryID, null, false);
     }
 
-    public BatteryInfo
+    public void
     moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
     {
-        return moveBatteryToStation(stationID, batteryID, __ctx, true);
+        moveBatteryToStation(stationID, batteryID, __ctx, true);
     }
 
     @SuppressWarnings("unchecked")
-    private BatteryInfo
+    private void
     moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
@@ -333,10 +333,10 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
             Ice._ObjectDel __delBase = null;
             try
             {
-                __checkTwowayOnly("moveBatteryToStation");
                 __delBase = __getDelegate();
                 _ClientServiceDel __del = (_ClientServiceDel)__delBase;
-                return __del.moveBatteryToStation(stationID, batteryID, __ctx);
+                __del.moveBatteryToStation(stationID, batteryID, __ctx);
+                return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
             {
@@ -433,20 +433,20 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
         }
     }
 
-    public void
+    public String
     purchase(BatteryInfo info)
     {
-        purchase(info, null, false);
+        return purchase(info, null, false);
     }
 
-    public void
+    public String
     purchase(BatteryInfo info, java.util.Map<String, String> __ctx)
     {
-        purchase(info, __ctx, true);
+        return purchase(info, __ctx, true);
     }
 
     @SuppressWarnings("unchecked")
-    private void
+    private String
     purchase(BatteryInfo info, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
@@ -459,10 +459,10 @@ public final class ClientServicePrxHelper extends Ice.ObjectPrxHelperBase implem
             Ice._ObjectDel __delBase = null;
             try
             {
+                __checkTwowayOnly("purchase");
                 __delBase = __getDelegate();
                 _ClientServiceDel __del = (_ClientServiceDel)__delBase;
-                __del.purchase(info, __ctx);
-                return;
+                return __del.purchase(info, __ctx);
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
             {

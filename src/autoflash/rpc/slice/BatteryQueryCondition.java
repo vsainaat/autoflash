@@ -15,7 +15,7 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
 {
     public BatteryModel model;
 
-    public BatteryStatus status;
+    public BatteryState state;
 
     public int minShippedDate;
 
@@ -35,10 +35,10 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
     {
     }
 
-    public BatteryQueryCondition(BatteryModel model, BatteryStatus status, int minShippedDate, int maxShippedDate, int minChargeRounds, int maxChargeRounds, String stationID, String depotID, String vehicleID)
+    public BatteryQueryCondition(BatteryModel model, BatteryState state, int minShippedDate, int maxShippedDate, int minChargeRounds, int maxChargeRounds, String stationID, String depotID, String vehicleID)
     {
         this.model = model;
-        this.status = status;
+        this.state = state;
         this.minShippedDate = minShippedDate;
         this.maxShippedDate = maxShippedDate;
         this.minChargeRounds = minChargeRounds;
@@ -70,7 +70,7 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
             {
                 return false;
             }
-            if(status != _r.status && status != null && !status.equals(_r.status))
+            if(state != _r.state && state != null && !state.equals(_r.state))
             {
                 return false;
             }
@@ -114,7 +114,7 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
     {
         int __h = 0;
         __h = 5 * __h + model.hashCode();
-        __h = 5 * __h + status.hashCode();
+        __h = 5 * __h + state.hashCode();
         __h = 5 * __h + minShippedDate;
         __h = 5 * __h + maxShippedDate;
         __h = 5 * __h + minChargeRounds;
@@ -153,7 +153,7 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
     __write(IceInternal.BasicStream __os)
     {
         model.__write(__os);
-        status.__write(__os);
+        state.__write(__os);
         __os.writeInt(minShippedDate);
         __os.writeInt(maxShippedDate);
         __os.writeInt(minChargeRounds);
@@ -168,7 +168,7 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
     {
         model = new BatteryModel();
         model.__read(__is);
-        status = BatteryStatus.__read(__is);
+        state = BatteryState.__read(__is);
         minShippedDate = __is.readInt();
         maxShippedDate = __is.readInt();
         minChargeRounds = __is.readInt();

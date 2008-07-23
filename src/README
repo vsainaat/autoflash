@@ -1,6 +1,6 @@
-package°²ÅÅ:
-autoflash.rpc.slice	ÓÉIceÉú³ÉµÄÎÄ¼ş
-autoflash.rpc			ÓÃÓÚÔ¶³ÌrpcµÄÎÄ¼ş£¬²¢ÏòclientÌá¹©·şÎñ
-autoflash.mock		Ä£Äâ»·¾³
-autoflash.server		·şÎñÆ÷¶ËÎÄ¼ş£¬ÏòÍâÖ»ĞèÒªÌá¹©Ò»¸öCoreService
-autoflash.client		¸÷¸ö¿Í»§¶ËµÄÎÄ¼ş
+packageå®‰æ’:
+autoflash.rpc.slice	ç”±Iceç”Ÿæˆçš„æ–‡ä»¶
+autoflash.rpc			ç”¨äºè¿œç¨‹rpcçš„æ–‡ä»¶ï¼Œå¹¶å‘clientæä¾›æœåŠ¡
+autoflash.mock		æ¨¡æ‹Ÿç¯å¢ƒ
+autoflash.server		æœåŠ¡å™¨ç«¯æ–‡ä»¶ï¼Œå‘å¤–åªéœ€è¦æä¾›ä¸€ä¸ªCoreService
+autoflash.client		å„ä¸ªå®¢æˆ·ç«¯çš„æ–‡ä»¶

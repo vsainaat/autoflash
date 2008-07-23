@@ -19,11 +19,11 @@ public interface ClientServicePrx extends Ice.ObjectPrx
     public double returnBattery(String stationID, String vechildID, String batteryID, double amount);
     public double returnBattery(String stationID, String vechildID, String batteryID, double amount, java.util.Map<String, String> __ctx);
 
-    public BatteryInfo moveBatteryToStation(String stationID, String batteryID);
-    public BatteryInfo moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx);
+    public void moveBatteryToStation(String stationID, String batteryID);
+    public void moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx);
 
-    public BatteryInfo moveBatteryFromStation(String stationID, String batteryID);
-    public BatteryInfo moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx);
+    public void moveBatteryFromStation(String stationID, String batteryID);
+    public void moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx);
 
     public void reportDamagedBattery(String stationID, String batteryID);
     public void reportDamagedBattery(String stationID, String batteryID, java.util.Map<String, String> __ctx);
@@ -37,14 +37,14 @@ public interface ClientServicePrx extends Ice.ObjectPrx
     public void closeStation(String stationID);
     public void closeStation(String stationID, java.util.Map<String, String> __ctx);
 
-    public BatteryInfo moveBatteryToDepot(String depotID, String batteryID);
-    public BatteryInfo moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx);
+    public void moveBatteryToDepot(String depotID, String batteryID);
+    public void moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx);
 
-    public BatteryInfo moveBatteryFromDepot(String depotID, String batteryID);
-    public BatteryInfo moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx);
+    public void moveBatteryFromDepot(String depotID, String batteryID);
+    public void moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx);
 
-    public void charge(String stationID, String batteryID, double currentAmount, double useAmount);
-    public void charge(String stationID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx);
+    public void charge(String depotID, String batteryID, double currentAmount, double useAmount);
+    public void charge(String depotID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx);
 
     public void discard(String depotID, String batteryID);
     public void discard(String depotID, String batteryID, java.util.Map<String, String> __ctx);
@@ -55,8 +55,8 @@ public interface ClientServicePrx extends Ice.ObjectPrx
     public void closeDepot(String depotID);
     public void closeDepot(String depotID, java.util.Map<String, String> __ctx);
 
-    public void purchase(BatteryInfo info);
-    public void purchase(BatteryInfo info, java.util.Map<String, String> __ctx);
+    public String purchase(BatteryInfo info);
+    public String purchase(BatteryInfo info, java.util.Map<String, String> __ctx);
 
     public Activity[] queryActivities(int start, int end);
     public Activity[] queryActivities(int start, int end, java.util.Map<String, String> __ctx);
