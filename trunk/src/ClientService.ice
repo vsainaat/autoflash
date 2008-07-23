@@ -13,20 +13,20 @@ module slice{
     	int longitudeSpan;
     };
 
-	// µç³ØĞÍºÅ
+	// ç”µæ± å‹å·
     struct BatteryModel {
         string name;
-        int maxChargeRounds;	// ×î¶à³äµç´ÎÊı
-        double capacity;		// ÈİÁ¿
-        int maxLifeTime;		// ×î³¤ÉúÃüÖÜÆÚ£¬ÒÔÈÕ¼ÆËã
+        int maxChargeRounds;	// æœ€å¤šå……ç”µæ¬¡æ•°
+        double capacity;		// å®¹é‡
+        int maxLifeTime;		// æœ€é•¿ç”Ÿå‘½å‘¨æœŸï¼Œä»¥æ—¥è®¡ç®—
         string factory;
     };
 
     struct BatteryInfo {	
         string ID;
         BatteryModel model;
-        int shippedDate;		// ¹ºÂòÈÕÆÚ
-        int chargeRounds;		// ÒÑ³äµç´ÎÊı
+        int shippedDate;		// è´­ä¹°æ—¥æœŸ
+        int chargeRounds;		// å·²å……ç”µæ¬¡æ•°
     };
     sequence<BatteryInfo> BatteriesInfo;
 
@@ -34,10 +34,10 @@ module slice{
         string ID;
         string address;
         Point position; 
-        int capacity;			// ¿É´æ´¢µÄµç³ØÊı
+        int capacity;			// å¯å­˜å‚¨çš„ç”µæ± æ•°
         string owner;
-        double chargePrice;		// ³äµç¼Û¸ñ£¬ÔİÊ±²»ÓÃÓÚ¼Æ¼Û
-        double rentPrice;		// ³¡µØ×â½ğ
+        double chargePrice;		// å……ç”µä»·æ ¼ï¼Œæš‚æ—¶ä¸ç”¨äºè®¡ä»·
+        double rentPrice;		// åœºåœ°ç§Ÿé‡‘
     };
     sequence<StationInfo> StationsInfo;
 
@@ -45,69 +45,69 @@ module slice{
         string ID;
         string address;
 		Point position;
-        double chargePrice;		// ³äµç¼Û¸ñ
-        int storageCapacity;	// ¿É´æ´¢µÄµç³ØÊı
-        int chargeCapacity;		// ¿ÉÍ¬Ê±³äµçµÄµç³ØÊı
+        double chargePrice;		// å……ç”µä»·æ ¼
+        int storageCapacity;	// å¯å­˜å‚¨çš„ç”µæ± æ•°
+        int chargeCapacity;		// å¯åŒæ—¶å……ç”µçš„ç”µæ± æ•°
         string owner;
-        double rentPrice;		// ³¡µØ×â½ğ
+        double rentPrice;		// åœºåœ°ç§Ÿé‡‘
     };
     sequence<DepotInfo> DepotsInfo;
 
     struct VehicleInfo {
-        string ID;				// ¿¼ÂÇµ½Ä³Ğ©³µÁ¾¿ÉÄÜÃ»ÓĞ³µÅÆ£¨ÈçĞÂ³µ£©£¬Òò´ËÊ¹ÓÃIDÍ³Ò»±êÊ¾³µÁ¾
-		string licence;			// ³µÅÆºÅ
+        string ID;				// è€ƒè™‘åˆ°æŸäº›è½¦è¾†å¯èƒ½æ²¡æœ‰è½¦ç‰Œï¼ˆå¦‚æ–°è½¦ï¼‰ï¼Œå› æ­¤ä½¿ç”¨IDç»Ÿä¸€æ ‡ç¤ºè½¦è¾†
+		string licence;			// è½¦ç‰Œå·
         string owner;
         string model;
     };
     sequence<VehicleInfo> VehiclesInfo;
 
-    enum BatteryState {Empty, 		// Î»ÓÚ¼ÓµçÕ¾»ò³äµçÕ¾£¬´¦ÓÚĞèÒª³äµçµÄ×´Ì¬
-    					Charging, 	// ÕıÔÚ³äµç
-    					Charged, 	// ÒÑ³äµçÍê±Ï
-    					Onboard, 	// ÒÑ±»×â³ö£¬Î»ÓÚ³µÁ¾ÉÏ
-    					Discarded, 	//	ÒÑ¾­·ÏÆú
+    enum BatteryState {Empty, 		// ä½äºåŠ ç”µç«™æˆ–å……ç”µç«™ï¼Œå¤„äºéœ€è¦å……ç”µçš„çŠ¶æ€
+    					Charging, 	// æ­£åœ¨å……ç”µ
+    					Charged, 	// å·²å……ç”µå®Œæ¯•
+    					Onboard, 	// å·²è¢«ç§Ÿå‡ºï¼Œä½äºè½¦è¾†ä¸Š
+    					Discarded, 	//	å·²ç»åºŸå¼ƒ
     					Arbitrary 
     					};
     					
     enum OpenStatus { Open, Closed, OpenOrClosed };
 
-	// ÔÚÒÔÏÂµÄ³äµçÌõ¼şÖĞ£¬Ò»Ğ©Ìõ¼ş¿ÉºöÂÔ£¬±ÈÈç¶ÔÓÚ´ú±íIDµÄstring£¬¿Õ´®±íÃ÷ºöÂÔ´ËÌõ¼ş¡£
+	// åœ¨ä»¥ä¸‹çš„å……ç”µæ¡ä»¶ä¸­ï¼Œä¸€äº›æ¡ä»¶å¯å¿½ç•¥ï¼Œæ¯”å¦‚å¯¹äºä»£è¡¨IDçš„stringï¼Œç©ºä¸²è¡¨æ˜å¿½ç•¥æ­¤æ¡ä»¶ã€‚
     struct BatteryQueryCondition {
-        BatteryModel model;		// ²éÑ¯ÌØ¶¨ĞÍºÅµÄµç³Ø
-        BatteryState state;		// ²éÑ¯ÌØ¶¨×´Ì¬µÄµç³Ø
-        int minShippedDate;		// ²éÑ¯³ÙÓÚÌØ¶¨ÈÕÆÚ¹ºÂòµÄµç³Ø
-        int maxShippedDate;		// ²éÑ¯ÔçÓÚÌØ¶¨ÈÕÆÚ¹ºÂòµÄµç³Ø
-        int minChargeRounds;	// ²éÑ¯³äµç´ÎÊı´óÓÚÌØ¶¨ÖµµÄµç³Ø
-        int maxChargeRounds;	// ²éÑ¯³äµç´ÎÊıĞ¡ÓÚÌØ¶¨ÖµµÄµç³Ø
-        string stationID;  		// ²éÑ¯Ä¿Ç°Î»ÓÚÄ³¼ÓµçÕ¾ÄÚµÄµç³Ø
-        string depotID;    		// ²éÑ¯Ä¿Ç°Î»ÓÚÄ³³äµçÕ¾ÄÚµÄµç³Ø
-        string vehicleID;  		// ²éÑ¯Ä¿Ç°Î»ÓÚÄ³¸ö³µÁ¾ÉÏµÄµç³Ø
+        BatteryModel model;		// æŸ¥è¯¢ç‰¹å®šå‹å·çš„ç”µæ± 
+        BatteryState state;		// æŸ¥è¯¢ç‰¹å®šçŠ¶æ€çš„ç”µæ± 
+        int minShippedDate;		// æŸ¥è¯¢è¿Ÿäºç‰¹å®šæ—¥æœŸè´­ä¹°çš„ç”µæ± 
+        int maxShippedDate;		// æŸ¥è¯¢æ—©äºç‰¹å®šæ—¥æœŸè´­ä¹°çš„ç”µæ± 
+        int minChargeRounds;	// æŸ¥è¯¢å……ç”µæ¬¡æ•°å¤§äºç‰¹å®šå€¼çš„ç”µæ± 
+        int maxChargeRounds;	// æŸ¥è¯¢å……ç”µæ¬¡æ•°å°äºç‰¹å®šå€¼çš„ç”µæ± 
+        string stationID;  		// æŸ¥è¯¢ç›®å‰ä½äºæŸåŠ ç”µç«™å†…çš„ç”µæ± 
+        string depotID;    		// æŸ¥è¯¢ç›®å‰ä½äºæŸå……ç”µç«™å†…çš„ç”µæ± 
+        string vehicleID;  		// æŸ¥è¯¢ç›®å‰ä½äºæŸä¸ªè½¦è¾†ä¸Šçš„ç”µæ± 
     };
 
     struct StationQueryCondition {
-        Area region;			// ²éÑ¯Î»ÓÚÄ³¸öÇøÓòÄÚµÄÕ¾µã
-        string stationID;  		// ²éÑ¯¾ßÓĞÌØ¶¨IDµÄÕ¾µã
-        OpenStatus status;		// ²éÑ¯Ä¿Ç°¿ª·Å»ò¹Ø±ÕµÄÕ¾µã
-        string owner;			// ²éÑ¯ÌØ¶¨ÓµÓĞÈËµÄÕ¾µã
-        int minCapacity;		// ²éÑ¯ÈİÁ¿´óÓÚÌØ¶¨ÖµµÄÕ¾µã
-        int maxCapacity;		// ²éÑ¯ÈİÁ¿Ğ¡ÓÚÌØ¶¨ÖµµÄÕ¾µã
+        Area region;			// æŸ¥è¯¢ä½äºæŸä¸ªåŒºåŸŸå†…çš„ç«™ç‚¹
+        string stationID;  		// æŸ¥è¯¢å…·æœ‰ç‰¹å®šIDçš„ç«™ç‚¹
+        OpenStatus status;		// æŸ¥è¯¢ç›®å‰å¼€æ”¾æˆ–å…³é—­çš„ç«™ç‚¹
+        string owner;			// æŸ¥è¯¢ç‰¹å®šæ‹¥æœ‰äººçš„ç«™ç‚¹
+        int minCapacity;		// æŸ¥è¯¢å®¹é‡å¤§äºç‰¹å®šå€¼çš„ç«™ç‚¹
+        int maxCapacity;		// æŸ¥è¯¢å®¹é‡å°äºç‰¹å®šå€¼çš„ç«™ç‚¹
     };
     struct DepotQueryCondition {
-        Area region;			// ²éÑ¯Î»ÓÚÄ³¸öÇøÓòÄÚµÄÕ¾µã
-        string depotID;    		// ²éÑ¯¾ßÓĞÌØ¶¨IDµÄÕ¾µã
-        OpenStatus status;		// ²éÑ¯Ä¿Ç°¿ª·Å»ò¹Ø±ÕµÄÕ¾µã
-        string owner;			// ²éÑ¯ÌØ¶¨ÓµÓĞÈËµÄÕ¾µã
-        int minStorageCapacity;	// ²éÑ¯´æ´¢ÈİÁ¿´óÓÚÌØ¶¨ÖµµÄÕ¾µã
-        int maxStorageCapacity;	// ²éÑ¯´æ´¢ÈİÁ¿Ğ¡ÓÚÌØ¶¨ÖµµÄÕ¾µã
-        int minChargeCapacity;	// ²éÑ¯³äµçÈİÁ¿´óÓÚÌØ¶¨ÖµµÄÕ¾µã
-        int maxChargeCapacity;	// ²éÑ¯³äµçÈİÁ¿Ğ¡ÓÚÌØ¶¨ÖµµÄÕ¾µã
+        Area region;			// æŸ¥è¯¢ä½äºæŸä¸ªåŒºåŸŸå†…çš„ç«™ç‚¹
+        string depotID;    		// æŸ¥è¯¢å…·æœ‰ç‰¹å®šIDçš„ç«™ç‚¹
+        OpenStatus status;		// æŸ¥è¯¢ç›®å‰å¼€æ”¾æˆ–å…³é—­çš„ç«™ç‚¹
+        string owner;			// æŸ¥è¯¢ç‰¹å®šæ‹¥æœ‰äººçš„ç«™ç‚¹
+        int minStorageCapacity;	// æŸ¥è¯¢å­˜å‚¨å®¹é‡å¤§äºç‰¹å®šå€¼çš„ç«™ç‚¹
+        int maxStorageCapacity;	// æŸ¥è¯¢å­˜å‚¨å®¹é‡å°äºç‰¹å®šå€¼çš„ç«™ç‚¹
+        int minChargeCapacity;	// æŸ¥è¯¢å……ç”µå®¹é‡å¤§äºç‰¹å®šå€¼çš„ç«™ç‚¹
+        int maxChargeCapacity;	// æŸ¥è¯¢å……ç”µå®¹é‡å°äºç‰¹å®šå€¼çš„ç«™ç‚¹
     };
     struct VehicleQueryCondition {
-        string model;			// ²éÑ¯Ä³¸öĞÍºÅµÄ³µÁ¾
-        int minChargeDate;		// ²éÑ¯ÉÏ´Î¼Óµç²»ÔçÓÚÌØ¶¨ÈÕÆÚµÄ³µÁ¾
-        int maxChargeDate;		// ²éÑ¯ÉÏ´Î¼Óµç²»ÍíÓÚÌØ¶¨ÈÕÆÚµÄ³µÁ¾
-        int batteryNum;			// ²éÑ¯Ä¿Ç°×âÓÃÌØ¶¨ÊéÄ¿µç³ØµÄ³µÁ¾
-        string batteryID;		// ²éÑ¯Ä¿Ç°Ä³¸öµç³ØËùÎ»ÓÚµÄ³µÁ¾
+        string model;			// æŸ¥è¯¢æŸä¸ªå‹å·çš„è½¦è¾†
+        int minChargeDate;		// æŸ¥è¯¢ä¸Šæ¬¡åŠ ç”µä¸æ—©äºç‰¹å®šæ—¥æœŸçš„è½¦è¾†
+        int maxChargeDate;		// æŸ¥è¯¢ä¸Šæ¬¡åŠ ç”µä¸æ™šäºç‰¹å®šæ—¥æœŸçš„è½¦è¾†
+        int batteryNum;			// æŸ¥è¯¢ç›®å‰ç§Ÿç”¨ç‰¹å®šä¹¦ç›®ç”µæ± çš„è½¦è¾†
+        string batteryID;		// æŸ¥è¯¢ç›®å‰æŸä¸ªç”µæ± æ‰€ä½äºçš„è½¦è¾†
     };
     
     enum ActivityType { Rent, Return, MoveFromStation, MoveToStation, MoveFromDepot, MoveInDepot, Purchase, Discard, OpenStation, CloseStation, OpenDepot, CloseDepot, Register, Unregister, Set, Charge };
@@ -121,60 +121,60 @@ module slice{
 
     interface ClientService {
         /** For Power Station */
-        // ´ó²¿·ÖÇé¿öÏÂÓ¦µ±ÊÇÊ×ÏÈ¹é»¹Ò»¿éÓÃ¹ıµÄµç³Ø²¢×â½èÒ»¿éĞÂµç³Ø£¬µ«Ò²¿ÉÒÔÒ»´Î×â½è»ò¹é»¹¶à¿éµç³Ø£¬Òò´Ë°ÑÁ½¸ö²Ù×÷·Ö¿ª¡£
-        // Ä¿Ç°Éè¼ÆËùÓĞµÄ¼Æ¼Û²Ù×÷¶¼·ÅÔÚ·şÎñÆ÷¶Ë½øĞĞ£¬Òò´Ë¿Í»§¶ËÖ»ĞèÒªÌá¹©Ïà¹ØĞÅÏ¢²¢´Ó·şÎñÆ÷¶ËµÃµ½²Ù×÷¼Û¸ñ¡£
+        // å¤§éƒ¨åˆ†æƒ…å†µä¸‹åº”å½“æ˜¯é¦–å…ˆå½’è¿˜ä¸€å—ç”¨è¿‡çš„ç”µæ± å¹¶ç§Ÿå€Ÿä¸€å—æ–°ç”µæ± ï¼Œä½†ä¹Ÿå¯ä»¥ä¸€æ¬¡ç§Ÿå€Ÿæˆ–å½’è¿˜å¤šå—ç”µæ± ï¼Œå› æ­¤æŠŠä¸¤ä¸ªæ“ä½œåˆ†å¼€ã€‚
+        // ç›®å‰è®¾è®¡æ‰€æœ‰çš„è®¡ä»·æ“ä½œéƒ½æ”¾åœ¨æœåŠ¡å™¨ç«¯è¿›è¡Œï¼Œå› æ­¤å®¢æˆ·ç«¯åªéœ€è¦æä¾›ç›¸å…³ä¿¡æ¯å¹¶ä»æœåŠ¡å™¨ç«¯å¾—åˆ°æ“ä½œä»·æ ¼ã€‚
         double rentBattery(string stationID, string vehicleID, string batteryID, double amount);
         double returnBattery(string stationID, string vechildID, string batteryID, double amount);
 
-        // µç³ØÔËÈë»òÔË³ö¼ÓµçÕ¾¡£
-        // ÎÒÃÇÔİÊ±²»¿¼ÂÇµç³ØÔËÊäµÄ°²ÅÅµÄ¹¤×÷£¬Ö»ÊÇ½øĞĞ¼ÇÂ¼¡£
+        // ç”µæ± è¿å…¥æˆ–è¿å‡ºåŠ ç”µç«™ã€‚
+        // æˆ‘ä»¬æš‚æ—¶ä¸è€ƒè™‘ç”µæ± è¿è¾“çš„å®‰æ’çš„å·¥ä½œï¼Œåªæ˜¯è¿›è¡Œè®°å½•ã€‚
         void moveBatteryToStation(string stationID, string batteryID);
         void moveBatteryFromStation(string stationID, string batteryID);
 
-        // ±¨¸æÊ§Ğ§µÄµç³Ø¡£
-        // TODO: ¿¼ÂÇÓÃ»§Ëğ»µµÄÅâ³¥ÎÊÌâ¡£
+        // æŠ¥å‘Šå¤±æ•ˆçš„ç”µæ± ã€‚
+        // TODO: è€ƒè™‘ç”¨æˆ·æŸåçš„èµ”å¿é—®é¢˜ã€‚
         void reportDamagedBattery(string stationID, string batteryID);
 
-        // ¶ÔÓÚ²»ÔÚÊı¾İ¿âµÄÄÚµÄ³µÁ¾£¬Ó¦µ±Ê×ÏÈ×¢²á¡£×¢²áÊ±Ïò·şÎñÆ÷´«Èë³µÁ¾ĞÅÏ¢£¬·şÎñÆ÷Éú³É³µÁ¾ID²¢·µ»Ø¡£
+        // å¯¹äºä¸åœ¨æ•°æ®åº“çš„å†…çš„è½¦è¾†ï¼Œåº”å½“é¦–å…ˆæ³¨å†Œã€‚æ³¨å†Œæ—¶å‘æœåŠ¡å™¨ä¼ å…¥è½¦è¾†ä¿¡æ¯ï¼ŒæœåŠ¡å™¨ç”Ÿæˆè½¦è¾†IDå¹¶è¿”å›ã€‚
         string registerVehicle(string stationID, VehicleInfo info);
 
-		// ¿ª·Å»ò¹Ø±ÕÒ»¸ö¼ÓµçÕ¾¡£
+		// å¼€æ”¾æˆ–å…³é—­ä¸€ä¸ªåŠ ç”µç«™ã€‚
         void openStation(string stationID);
         void closeStation(string stationID);
 
         /** For Depot */
-        // µç³ØÔËÈë»òÔË³ö³äµçÕ¾¡£
-        // ÎÒÃÇÔİÊ±²»¿¼ÂÇµç³ØÔËÊäµÄ°²ÅÅµÄ¹¤×÷£¬Ö»ÊÇ½øĞĞ¼ÇÂ¼¡£
+        // ç”µæ± è¿å…¥æˆ–è¿å‡ºå……ç”µç«™ã€‚
+        // æˆ‘ä»¬æš‚æ—¶ä¸è€ƒè™‘ç”µæ± è¿è¾“çš„å®‰æ’çš„å·¥ä½œï¼Œåªæ˜¯è¿›è¡Œè®°å½•ã€‚
         void moveBatteryToDepot(string depotID, string batteryID);
         void moveBatteryFromDepot(string depotID, string batteryID);
 
- 		// Îªµç³Ø³äµç£¬Ïò·şÎñÆ÷±¨¸æµç³ØÄ¿Ç°µÄµçÁ¿£¬ÒÔ¼°×ÔÇ°Ò»´Î±¨¸æºó³äµçµÄµçÁ¿¡£
+ 		// ä¸ºç”µæ± å……ç”µï¼Œå‘æœåŠ¡å™¨æŠ¥å‘Šç”µæ± ç›®å‰çš„ç”µé‡ï¼Œä»¥åŠè‡ªå‰ä¸€æ¬¡æŠ¥å‘Šåå……ç”µçš„ç”µé‡ã€‚
         void charge(string depotID, string batteryID, double currentAmount, double useAmount);
 
-        // ·ÏÆúµç³Ø£¬°üÀ¨±¨·ÏµÄÒÔ¼°Ëğ»µµÄµç³Ø¡£
+        // åºŸå¼ƒç”µæ± ï¼ŒåŒ…æ‹¬æŠ¥åºŸçš„ä»¥åŠæŸåçš„ç”µæ± ã€‚
         void discard(string depotID, string batteryID);
 
         void openDepot(string depotID);
         void closeDepot(string depotID);
 
         /** For battery supplier */
-        // ²É¹ºĞÂµç³Ø£¬·µ»ØĞÂµç³ØµÄID
+        // é‡‡è´­æ–°ç”µæ± ï¼Œè¿”å›æ–°ç”µæ± çš„ID
         string purchase(BatteryInfo info);
 
         /** For administrator */
-        // ²éÑ¯ÔÚÌØ¶¨Ê±¼ä¶ÎÄÚµÄ»î¶¯¼ÇÂ¼
+        // æŸ¥è¯¢åœ¨ç‰¹å®šæ—¶é—´æ®µå†…çš„æ´»åŠ¨è®°å½•
         Activities queryActivities(int start, int end);
         Activities queryBatteryActivities(string batteryID, int start, int end);
         Activities queryStationActivities(string staionID, int start, int end);
         Activities queryDepotActivities(string staionID, int start, int end);
 
-		// ¸ù¾İ²éÑ¯Ìõ¼ş²éÑ¯ÌØ¶¨µÄÕ¾µã»ò³µÁ¾¡¢µç³Ø
+		// æ ¹æ®æŸ¥è¯¢æ¡ä»¶æŸ¥è¯¢ç‰¹å®šçš„ç«™ç‚¹æˆ–è½¦è¾†ã€ç”µæ± 
         StationsInfo queryStations(StationQueryCondition c);
         DepotsInfo queryDepots(DepotQueryCondition c);
         BatteriesInfo queryBatteries(BatteryQueryCondition c);
         VehiclesInfo queryVehicles(VehicleQueryCondition c);
 
-        // ×¢²á¼ÓµçÕ¾»ò³äµçÕ¾¡£×¢²áÊ±£¬´«ÈëÕ¾µãĞÅÏ¢ºó£¬·şÎñÆ÷·µ»ØÕ¾µãID
+        // æ³¨å†ŒåŠ ç”µç«™æˆ–å……ç”µç«™ã€‚æ³¨å†Œæ—¶ï¼Œä¼ å…¥ç«™ç‚¹ä¿¡æ¯åï¼ŒæœåŠ¡å™¨è¿”å›ç«™ç‚¹ID
         string registerStation(StationInfo info);
         string registerDepot(DepotInfo info);
         void unregisterStation(string stationID);
