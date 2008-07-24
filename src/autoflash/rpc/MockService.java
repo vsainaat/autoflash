@@ -80,7 +80,7 @@ public class MockService {
 	}
 
 	// 获取所有的加电站。
-	public static StationInfo[] queryAllStations() {
+	public static StationInfo[] queryAllStations() throws OperationError {
 		StationQueryCondition c = new StationQueryCondition();
 		c.region = new Area();
 		c.region.topLeftCorner = new Point();
@@ -97,7 +97,7 @@ public class MockService {
 	}
 
 	// 获取所有的车辆
-	public static VehicleInfo[] queryAllVehicles() {
+	public static VehicleInfo[] queryAllVehicles() throws OperationError {
 		VehicleQueryCondition c = new VehicleQueryCondition();
 		c.minChargeDate = 0;
 		c.maxChargeDate = 99999;
@@ -108,7 +108,7 @@ public class MockService {
 	}
 
 	// 获取所有的充电站
-	public static DepotInfo[] queryAllDepots() {
+	public static DepotInfo[] queryAllDepots() throws OperationError {
 		DepotQueryCondition c = new DepotQueryCondition();
 		c.region = new Area();
 		c.region.topLeftCorner = new Point();
@@ -127,7 +127,7 @@ public class MockService {
 	}
 
 	// 获取所有的电池
-	public static BatteryInfo[] queryAllBatteries() {
+	public static BatteryInfo[] queryAllBatteries() throws OperationError {
 		return service_.queryBatteries(makeQueryAllBatteryCondition());
 	}
 	

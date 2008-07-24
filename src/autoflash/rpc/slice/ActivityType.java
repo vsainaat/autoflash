@@ -18,7 +18,7 @@ public enum ActivityType
     MoveFromStation(2),
     MoveToStation(3),
     MoveFromDepot(4),
-    MoveInDepot(5),
+    MoveToDepot(5),
     Purchase(6),
     Discard(7),
     OpenStation(8),
@@ -38,7 +38,7 @@ public enum ActivityType
         __values[2] = MoveFromStation;
         __values[3] = MoveToStation;
         __values[4] = MoveFromDepot;
-        __values[5] = MoveInDepot;
+        __values[5] = MoveToDepot;
         __values[6] = Purchase;
         __values[7] = Discard;
         __values[8] = OpenStation;
@@ -57,7 +57,7 @@ public enum ActivityType
     public static final int _MoveFromStation = 2;
     public static final int _MoveToStation = 3;
     public static final int _MoveFromDepot = 4;
-    public static final int _MoveInDepot = 5;
+    public static final int _MoveToDepot = 5;
     public static final int _Purchase = 6;
     public static final int _Discard = 7;
     public static final int _OpenStation = 8;

@@ -35,7 +35,7 @@ public final class ActivitiesHelper
     {
         Activity[] __v;
         final int __len0 = __is.readSize();
-        __is.startSeq(__len0, 7);
+        __is.startSeq(__len0, 20);
         __v = new Activity[__len0];
         for(int __i0 = 0; __i0 < __len0; __i0++)
         {

@@ -70,174 +70,216 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
 
     public final void
     charge(String depotID, String batteryID, double currentAmount, double useAmount)
+        throws OperationError
     {
         charge(depotID, batteryID, currentAmount, useAmount, null);
     }
 
     public final void
     closeDepot(String depotID)
+        throws OperationError
     {
         closeDepot(depotID, null);
     }
 
     public final void
     closeStation(String stationID)
+        throws OperationError
     {
         closeStation(stationID, null);
     }
 
     public final void
     discard(String depotID, String batteryID)
+        throws OperationError
     {
         discard(depotID, batteryID, null);
     }
 
     public final void
     moveBatteryFromDepot(String depotID, String batteryID)
+        throws OperationError
     {
         moveBatteryFromDepot(depotID, batteryID, null);
     }
 
     public final void
     moveBatteryFromStation(String stationID, String batteryID)
+        throws OperationError
     {
         moveBatteryFromStation(stationID, batteryID, null);
     }
 
     public final void
     moveBatteryToDepot(String depotID, String batteryID)
+        throws OperationError
     {
         moveBatteryToDepot(depotID, batteryID, null);
     }
 
     public final void
     moveBatteryToStation(String stationID, String batteryID)
+        throws OperationError
     {
         moveBatteryToStation(stationID, batteryID, null);
     }
 
     public final void
     openDepot(String depotID)
+        throws OperationError
     {
         openDepot(depotID, null);
     }
 
     public final void
     openStation(String stationID)
+        throws OperationError
     {
         openStation(stationID, null);
     }
 
     public final String
-    purchase(BatteryInfo info)
+    purchase(BatteryInfo info, double price)
+        throws OperationError
     {
-        return purchase(info, null);
+        return purchase(info, price, null);
     }
 
     public final Activity[]
-    queryActivities(int start, int end)
+    queryActivities(long start, long end)
     {
         return queryActivities(start, end, null);
     }
 
     public final BatteryInfo[]
     queryBatteries(BatteryQueryCondition c)
+        throws OperationError
     {
         return queryBatteries(c, null);
     }
 
     public final Activity[]
-    queryBatteryActivities(String batteryID, int start, int end)
+    queryBatteryActivities(String batteryID, long start, long end)
+        throws OperationError
     {
         return queryBatteryActivities(batteryID, start, end, null);
     }
 
     public final Activity[]
-    queryDepotActivities(String staionID, int start, int end)
+    queryDepotActivities(String staionID, long start, long end)
+        throws OperationError
     {
         return queryDepotActivities(staionID, start, end, null);
     }
 
     public final DepotInfo[]
     queryDepots(DepotQueryCondition c)
+        throws OperationError
     {
         return queryDepots(c, null);
     }
 
     public final Activity[]
-    queryStationActivities(String staionID, int start, int end)
+    queryStationActivities(String staionID, long start, long end)
+        throws OperationError
     {
         return queryStationActivities(staionID, start, end, null);
     }
 
     public final StationInfo[]
     queryStations(StationQueryCondition c)
+        throws OperationError
     {
         return queryStations(c, null);
     }
 
     public final VehicleInfo[]
     queryVehicles(VehicleQueryCondition c)
+        throws OperationError
     {
         return queryVehicles(c, null);
     }
 
     public final String
     registerDepot(DepotInfo info)
+        throws OperationError
     {
         return registerDepot(info, null);
     }
 
     public final String
     registerStation(StationInfo info)
+        throws OperationError
     {
         return registerStation(info, null);
     }
 
     public final String
     registerVehicle(String stationID, VehicleInfo info)
+        throws OperationError
     {
         return registerVehicle(stationID, info, null);
     }
 
     public final double
     rentBattery(String stationID, String vehicleID, String batteryID, double amount)
+        throws OperationError
     {
         return rentBattery(stationID, vehicleID, batteryID, amount, null);
     }
 
     public final void
     reportDamagedBattery(String stationID, String batteryID)
+        throws OperationError
     {
         reportDamagedBattery(stationID, batteryID, null);
     }
 
     public final double
     returnBattery(String stationID, String vechildID, String batteryID, double amount)
+        throws OperationError
     {
         return returnBattery(stationID, vechildID, batteryID, amount, null);
     }
 
     public final void
     setDepot(String stationID, DepotInfo info)
+        throws OperationError
     {
         setDepot(stationID, info, null);
     }
 
     public final void
     setStation(String stationID, StationInfo info)
+        throws OperationError
     {
         setStation(stationID, info, null);
     }
 
     public final void
+    setUnitChargePrice(double price)
+        throws OperationError
+    {
+        setUnitChargePrice(price, null);
+    }
+
+    public final void
+    setUnitPrice(double price)
+        throws OperationError
+    {
+        setUnitPrice(price, null);
+    }
+
+    public final void
     unregisterDepot(String depotID)
+        throws OperationError
     {
         unregisterDepot(depotID, null);
     }
 
     public final void
     unregisterStation(String stationID)
+        throws OperationError
     {
         unregisterStation(stationID, null);
     }
@@ -256,9 +298,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         batteryID = __is.readString();
         double amount;
         amount = __is.readDouble();
-        double __ret = __obj.rentBattery(stationID, vehicleID, batteryID, amount, __current);
-        __os.writeDouble(__ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            double __ret = __obj.rentBattery(stationID, vehicleID, batteryID, amount, __current);
+            __os.writeDouble(__ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -275,9 +325,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         batteryID = __is.readString();
         double amount;
         amount = __is.readDouble();
-        double __ret = __obj.returnBattery(stationID, vechildID, batteryID, amount, __current);
-        __os.writeDouble(__ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            double __ret = __obj.returnBattery(stationID, vechildID, batteryID, amount, __current);
+            __os.writeDouble(__ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -285,12 +343,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        __obj.moveBatteryToStation(stationID, batteryID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.moveBatteryToStation(stationID, batteryID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -298,12 +365,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        __obj.moveBatteryFromStation(stationID, batteryID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.moveBatteryFromStation(stationID, batteryID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -311,12 +387,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        __obj.reportDamagedBattery(stationID, batteryID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.reportDamagedBattery(stationID, batteryID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -330,9 +415,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         VehicleInfo info;
         info = new VehicleInfo();
         info.__read(__is);
-        String __ret = __obj.registerVehicle(stationID, info, __current);
-        __os.writeString(__ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            String __ret = __obj.registerVehicle(stationID, info, __current);
+            __os.writeString(__ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -340,10 +433,19 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
-        __obj.openStation(stationID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.openStation(stationID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -351,10 +453,19 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
-        __obj.closeStation(stationID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.closeStation(stationID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -362,12 +473,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        __obj.moveBatteryToDepot(depotID, batteryID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.moveBatteryToDepot(depotID, batteryID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -375,12 +495,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        __obj.moveBatteryFromDepot(depotID, batteryID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.moveBatteryFromDepot(depotID, batteryID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -388,6 +517,7 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
         String batteryID;
@@ -396,8 +526,16 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         currentAmount = __is.readDouble();
         double useAmount;
         useAmount = __is.readDouble();
-        __obj.charge(depotID, batteryID, currentAmount, useAmount, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.charge(depotID, batteryID, currentAmount, useAmount, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -405,12 +543,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
         String batteryID;
         batteryID = __is.readString();
-        __obj.discard(depotID, batteryID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.discard(depotID, batteryID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -418,10 +565,19 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
-        __obj.openDepot(depotID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.openDepot(depotID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -429,10 +585,19 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
-        __obj.closeDepot(depotID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.closeDepot(depotID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -444,9 +609,19 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         BatteryInfo info;
         info = new BatteryInfo();
         info.__read(__is);
-        String __ret = __obj.purchase(info, __current);
-        __os.writeString(__ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        double price;
+        price = __is.readDouble();
+        try
+        {
+            String __ret = __obj.purchase(info, price, __current);
+            __os.writeString(__ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -455,10 +630,10 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
         IceInternal.BasicStream __os = __inS.os();
-        int start;
-        start = __is.readInt();
-        int end;
-        end = __is.readInt();
+        long start;
+        start = __is.readLong();
+        long end;
+        end = __is.readLong();
         Activity[] __ret = __obj.queryActivities(start, end, __current);
         ActivitiesHelper.write(__os, __ret);
         return IceInternal.DispatchStatus.DispatchOK;
@@ -472,13 +647,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         IceInternal.BasicStream __os = __inS.os();
         String batteryID;
         batteryID = __is.readString();
-        int start;
-        start = __is.readInt();
-        int end;
-        end = __is.readInt();
-        Activity[] __ret = __obj.queryBatteryActivities(batteryID, start, end, __current);
-        ActivitiesHelper.write(__os, __ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        long start;
+        start = __is.readLong();
+        long end;
+        end = __is.readLong();
+        try
+        {
+            Activity[] __ret = __obj.queryBatteryActivities(batteryID, start, end, __current);
+            ActivitiesHelper.write(__os, __ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -489,13 +672,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         IceInternal.BasicStream __os = __inS.os();
         String staionID;
         staionID = __is.readString();
-        int start;
-        start = __is.readInt();
-        int end;
-        end = __is.readInt();
-        Activity[] __ret = __obj.queryStationActivities(staionID, start, end, __current);
-        ActivitiesHelper.write(__os, __ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        long start;
+        start = __is.readLong();
+        long end;
+        end = __is.readLong();
+        try
+        {
+            Activity[] __ret = __obj.queryStationActivities(staionID, start, end, __current);
+            ActivitiesHelper.write(__os, __ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -506,13 +697,21 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         IceInternal.BasicStream __os = __inS.os();
         String staionID;
         staionID = __is.readString();
-        int start;
-        start = __is.readInt();
-        int end;
-        end = __is.readInt();
-        Activity[] __ret = __obj.queryDepotActivities(staionID, start, end, __current);
-        ActivitiesHelper.write(__os, __ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        long start;
+        start = __is.readLong();
+        long end;
+        end = __is.readLong();
+        try
+        {
+            Activity[] __ret = __obj.queryDepotActivities(staionID, start, end, __current);
+            ActivitiesHelper.write(__os, __ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -524,9 +723,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         StationQueryCondition c;
         c = new StationQueryCondition();
         c.__read(__is);
-        StationInfo[] __ret = __obj.queryStations(c, __current);
-        StationsInfoHelper.write(__os, __ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            StationInfo[] __ret = __obj.queryStations(c, __current);
+            StationsInfoHelper.write(__os, __ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -538,9 +745,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         DepotQueryCondition c;
         c = new DepotQueryCondition();
         c.__read(__is);
-        DepotInfo[] __ret = __obj.queryDepots(c, __current);
-        DepotsInfoHelper.write(__os, __ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            DepotInfo[] __ret = __obj.queryDepots(c, __current);
+            DepotsInfoHelper.write(__os, __ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -552,9 +767,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         BatteryQueryCondition c;
         c = new BatteryQueryCondition();
         c.__read(__is);
-        BatteryInfo[] __ret = __obj.queryBatteries(c, __current);
-        BatteriesInfoHelper.write(__os, __ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            BatteryInfo[] __ret = __obj.queryBatteries(c, __current);
+            BatteriesInfoHelper.write(__os, __ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -566,9 +789,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         VehicleQueryCondition c;
         c = new VehicleQueryCondition();
         c.__read(__is);
-        VehicleInfo[] __ret = __obj.queryVehicles(c, __current);
-        VehiclesInfoHelper.write(__os, __ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            VehicleInfo[] __ret = __obj.queryVehicles(c, __current);
+            VehiclesInfoHelper.write(__os, __ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -580,9 +811,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         StationInfo info;
         info = new StationInfo();
         info.__read(__is);
-        String __ret = __obj.registerStation(info, __current);
-        __os.writeString(__ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            String __ret = __obj.registerStation(info, __current);
+            __os.writeString(__ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -594,9 +833,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         DepotInfo info;
         info = new DepotInfo();
         info.__read(__is);
-        String __ret = __obj.registerDepot(info, __current);
-        __os.writeString(__ret);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            String __ret = __obj.registerDepot(info, __current);
+            __os.writeString(__ret);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -604,10 +851,19 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
-        __obj.unregisterStation(stationID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.unregisterStation(stationID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -615,13 +871,22 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
         StationInfo info;
         info = new StationInfo();
         info.__read(__is);
-        __obj.setStation(stationID, info, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.setStation(stationID, info, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -629,10 +894,19 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String depotID;
         depotID = __is.readString();
-        __obj.unregisterDepot(depotID, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.unregisterDepot(depotID, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static IceInternal.DispatchStatus
@@ -640,13 +914,62 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
         String stationID;
         stationID = __is.readString();
         DepotInfo info;
         info = new DepotInfo();
         info.__read(__is);
-        __obj.setDepot(stationID, info, __current);
-        return IceInternal.DispatchStatus.DispatchOK;
+        try
+        {
+            __obj.setDepot(stationID, info, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
+    }
+
+    public static IceInternal.DispatchStatus
+    ___setUnitPrice(ClientService __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
+        double price;
+        price = __is.readDouble();
+        try
+        {
+            __obj.setUnitPrice(price, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
+    }
+
+    public static IceInternal.DispatchStatus
+    ___setUnitChargePrice(ClientService __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        IceInternal.BasicStream __os = __inS.os();
+        double price;
+        price = __is.readDouble();
+        try
+        {
+            __obj.setUnitChargePrice(price, __current);
+            return IceInternal.DispatchStatus.DispatchOK;
+        }
+        catch(OperationError ex)
+        {
+            __os.writeUserException(ex);
+            return IceInternal.DispatchStatus.DispatchUserException;
+        }
     }
 
     private final static String[] __all =
@@ -682,6 +1005,8 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
         "returnBattery",
         "setDepot",
         "setStation",
+        "setUnitChargePrice",
+        "setUnitPrice",
         "unregisterDepot",
         "unregisterStation"
     };
@@ -823,9 +1148,17 @@ public abstract class _ClientServiceDisp extends Ice.ObjectImpl implements Clien
             }
             case 31:
             {
-                return ___unregisterDepot(this, in, __current);
+                return ___setUnitChargePrice(this, in, __current);
             }
             case 32:
+            {
+                return ___setUnitPrice(this, in, __current);
+            }
+            case 33:
+            {
+                return ___unregisterDepot(this, in, __current);
+            }
+            case 34:
             {
                 return ___unregisterStation(this, in, __current);
             }

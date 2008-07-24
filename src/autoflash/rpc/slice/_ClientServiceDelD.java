@@ -15,7 +15,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 {
     public void
     charge(String depotID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "charge", Ice.OperationMode.Normal, __ctx);
@@ -56,7 +57,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     closeDepot(String depotID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "closeDepot", Ice.OperationMode.Normal, __ctx);
@@ -97,7 +99,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     closeStation(String stationID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "closeStation", Ice.OperationMode.Normal, __ctx);
@@ -138,7 +141,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     discard(String depotID, String batteryID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "discard", Ice.OperationMode.Normal, __ctx);
@@ -179,7 +183,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "moveBatteryFromDepot", Ice.OperationMode.Normal, __ctx);
@@ -220,7 +225,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "moveBatteryFromStation", Ice.OperationMode.Normal, __ctx);
@@ -261,7 +267,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "moveBatteryToDepot", Ice.OperationMode.Normal, __ctx);
@@ -302,7 +309,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "moveBatteryToStation", Ice.OperationMode.Normal, __ctx);
@@ -343,7 +351,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     openDepot(String depotID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "openDepot", Ice.OperationMode.Normal, __ctx);
@@ -384,7 +393,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     openStation(String stationID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "openStation", Ice.OperationMode.Normal, __ctx);
@@ -424,8 +434,9 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
     }
 
     public String
-    purchase(BatteryInfo info, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+    purchase(BatteryInfo info, double price, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "purchase", Ice.OperationMode.Normal, __ctx);
@@ -449,7 +460,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
                 }
                 try
                 {
-                    return __servant.purchase(info, __current);
+                    return __servant.purchase(info, price, __current);
                 }
                 catch(Ice.LocalException __ex)
                 {
@@ -464,7 +475,7 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
     }
 
     public Activity[]
-    queryActivities(int start, int end, java.util.Map<String, String> __ctx)
+    queryActivities(long start, long end, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
         Ice.Current __current = new Ice.Current();
@@ -505,7 +516,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public BatteryInfo[]
     queryBatteries(BatteryQueryCondition c, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "queryBatteries", Ice.OperationMode.Normal, __ctx);
@@ -544,8 +556,9 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
     }
 
     public Activity[]
-    queryBatteryActivities(String batteryID, int start, int end, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+    queryBatteryActivities(String batteryID, long start, long end, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "queryBatteryActivities", Ice.OperationMode.Normal, __ctx);
@@ -584,8 +597,9 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
     }
 
     public Activity[]
-    queryDepotActivities(String staionID, int start, int end, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+    queryDepotActivities(String staionID, long start, long end, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "queryDepotActivities", Ice.OperationMode.Normal, __ctx);
@@ -625,7 +639,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public DepotInfo[]
     queryDepots(DepotQueryCondition c, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "queryDepots", Ice.OperationMode.Normal, __ctx);
@@ -664,8 +679,9 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
     }
 
     public Activity[]
-    queryStationActivities(String staionID, int start, int end, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+    queryStationActivities(String staionID, long start, long end, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "queryStationActivities", Ice.OperationMode.Normal, __ctx);
@@ -705,7 +721,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public StationInfo[]
     queryStations(StationQueryCondition c, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "queryStations", Ice.OperationMode.Normal, __ctx);
@@ -745,7 +762,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public VehicleInfo[]
     queryVehicles(VehicleQueryCondition c, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "queryVehicles", Ice.OperationMode.Normal, __ctx);
@@ -785,7 +803,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public String
     registerDepot(DepotInfo info, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "registerDepot", Ice.OperationMode.Normal, __ctx);
@@ -825,7 +844,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public String
     registerStation(StationInfo info, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "registerStation", Ice.OperationMode.Normal, __ctx);
@@ -865,7 +885,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public String
     registerVehicle(String stationID, VehicleInfo info, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "registerVehicle", Ice.OperationMode.Normal, __ctx);
@@ -905,7 +926,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public double
     rentBattery(String stationID, String vehicleID, String batteryID, double amount, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "rentBattery", Ice.OperationMode.Normal, __ctx);
@@ -945,7 +967,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     reportDamagedBattery(String stationID, String batteryID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "reportDamagedBattery", Ice.OperationMode.Normal, __ctx);
@@ -986,7 +1009,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public double
     returnBattery(String stationID, String vechildID, String batteryID, double amount, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "returnBattery", Ice.OperationMode.Normal, __ctx);
@@ -1026,7 +1050,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     setDepot(String stationID, DepotInfo info, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "setDepot", Ice.OperationMode.Normal, __ctx);
@@ -1067,7 +1092,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     setStation(String stationID, StationInfo info, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "setStation", Ice.OperationMode.Normal, __ctx);
@@ -1107,8 +1133,93 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
     }
 
     public void
+    setUnitChargePrice(double price, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
+    {
+        Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "setUnitChargePrice", Ice.OperationMode.Normal, __ctx);
+        while(true)
+        {
+            IceInternal.Direct __direct = new IceInternal.Direct(__current);
+            try
+            {
+                ClientService __servant = null;
+                try
+                {
+                    __servant = (ClientService)__direct.servant();
+                }
+                catch(ClassCastException __ex)
+                {
+                    Ice.OperationNotExistException __opEx = new Ice.OperationNotExistException();
+                    __opEx.id = __current.id;
+                    __opEx.facet = __current.facet;
+                    __opEx.operation = __current.operation;
+                    throw __opEx;
+                }
+                try
+                {
+                    __servant.setUnitChargePrice(price, __current);
+                    return;
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+    }
+
+    public void
+    setUnitPrice(double price, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
+    {
+        Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "setUnitPrice", Ice.OperationMode.Normal, __ctx);
+        while(true)
+        {
+            IceInternal.Direct __direct = new IceInternal.Direct(__current);
+            try
+            {
+                ClientService __servant = null;
+                try
+                {
+                    __servant = (ClientService)__direct.servant();
+                }
+                catch(ClassCastException __ex)
+                {
+                    Ice.OperationNotExistException __opEx = new Ice.OperationNotExistException();
+                    __opEx.id = __current.id;
+                    __opEx.facet = __current.facet;
+                    __opEx.operation = __current.operation;
+                    throw __opEx;
+                }
+                try
+                {
+                    __servant.setUnitPrice(price, __current);
+                    return;
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+    }
+
+    public void
     unregisterDepot(String depotID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "unregisterDepot", Ice.OperationMode.Normal, __ctx);
@@ -1149,7 +1260,8 @@ public final class _ClientServiceDelD extends Ice._ObjectDelD implements _Client
 
     public void
     unregisterStation(String stationID, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               OperationError
     {
         Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "unregisterStation", Ice.OperationMode.Normal, __ctx);

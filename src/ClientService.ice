@@ -1,3 +1,4 @@
+#include <Exceptions.ice>
 module autoflash {
 module rpc {
 module slice{
@@ -65,7 +66,7 @@ module slice{
     					Charging, 	// 正在充电
     					Charged, 	// 已充电完毕
     					Onboard, 	// 已被租出，位于车辆上
-    					Discarded, 	//	已经废弃
+    					Discarded, 	// 已经废弃
     					Arbitrary 
     					};
     					
@@ -110,12 +111,16 @@ module slice{
         string batteryID;		// 查询目前某个电池所位于的车辆
     };
     
-    enum ActivityType { Rent, Return, MoveFromStation, MoveToStation, MoveFromDepot, MoveInDepot, Purchase, Discard, OpenStation, CloseStation, OpenDepot, CloseDepot, Register, Unregister, Set, Charge };
+    enum ActivityType { Rent, Return, MoveFromStation, MoveToStation, MoveFromDepot, MoveToDepot, 
+    					Purchase, Discard, OpenStation, CloseStation, OpenDepot, CloseDepot, 
+    					Register, Unregister, Set, Charge };
     struct Activity {
+    	long time;
         ActivityType type;
         string batteryID;
+        string vehicleID;
         string stationOrDepotID;
-        int money;
+        double price;
     };
     sequence<Activity> Activities;
 
@@ -123,64 +128,73 @@ module slice{
         /** For Power Station */
         // 大部分情况下应当是首先归还一块用过的电池并租借一块新电池，但也可以一次租借或归还多块电池，因此把两个操作分开。
         // 目前设计所有的计价操作都放在服务器端进行，因此客户端只需要提供相关信息并从服务器端得到操作价格。
-        double rentBattery(string stationID, string vehicleID, string batteryID, double amount);
-        double returnBattery(string stationID, string vechildID, string batteryID, double amount);
+        // rentBattery返回正值，returnBattery返回负值。
+        double rentBattery(string stationID, string vehicleID, string batteryID, double amount)
+        	throws OperationError;
+        double returnBattery(string stationID, string vechildID, string batteryID, double amount)
+        	throws OperationError;
 
         // 电池运入或运出加电站。
         // 我们暂时不考虑电池运输的安排的工作，只是进行记录。
-        void moveBatteryToStation(string stationID, string batteryID);
-        void moveBatteryFromStation(string stationID, string batteryID);
+        void moveBatteryToStation(string stationID, string batteryID) throws OperationError;
+        void moveBatteryFromStation(string stationID, string batteryID) throws OperationError;
 
         // 报告失效的电池。
         // TODO: 考虑用户损坏的赔偿问题。
-        void reportDamagedBattery(string stationID, string batteryID);
+        void reportDamagedBattery(string stationID, string batteryID) throws OperationError;
 
         // 对于不在数据库的内的车辆，应当首先注册。注册时向服务器传入车辆信息，服务器生成车辆ID并返回。
-        string registerVehicle(string stationID, VehicleInfo info);
+        string registerVehicle(string stationID, VehicleInfo info) throws OperationError;
 
 		// 开放或关闭一个加电站。
-        void openStation(string stationID);
-        void closeStation(string stationID);
+        void openStation(string stationID) throws OperationError;
+        void closeStation(string stationID) throws OperationError;
 
         /** For Depot */
         // 电池运入或运出充电站。
         // 我们暂时不考虑电池运输的安排的工作，只是进行记录。
-        void moveBatteryToDepot(string depotID, string batteryID);
-        void moveBatteryFromDepot(string depotID, string batteryID);
+        void moveBatteryToDepot(string depotID, string batteryID) throws OperationError;
+        void moveBatteryFromDepot(string depotID, string batteryID) throws OperationError;
 
- 		// 为电池充电，向服务器报告电池目前的电量，以及自前一次报告后充电的电量。
-        void charge(string depotID, string batteryID, double currentAmount, double useAmount);
+ 		// 为电池充电，向服务器报告电池充满电后目前的电量，以及这次充电的用电量。
+        void charge(string depotID, string batteryID, double currentAmount, double useAmount) throws OperationError;
 
         // 废弃电池，包括报废的以及损坏的电池。
-        void discard(string depotID, string batteryID);
+        void discard(string depotID, string batteryID) throws OperationError;
 
-        void openDepot(string depotID);
-        void closeDepot(string depotID);
+        void openDepot(string depotID) throws OperationError;
+        void closeDepot(string depotID) throws OperationError;
 
         /** For battery supplier */
         // 采购新电池，返回新电池的ID
-        string purchase(BatteryInfo info);
+        string purchase(BatteryInfo info, double price) throws OperationError;
 
         /** For administrator */
         // 查询在特定时间段内的活动记录
-        Activities queryActivities(int start, int end);
-        Activities queryBatteryActivities(string batteryID, int start, int end);
-        Activities queryStationActivities(string staionID, int start, int end);
-        Activities queryDepotActivities(string staionID, int start, int end);
+        Activities queryActivities(long start, long end);
+        Activities queryBatteryActivities(string batteryID, long start, long end) throws OperationError;
+        Activities queryStationActivities(string staionID, long start, long end) throws OperationError;
+        Activities queryDepotActivities(string staionID, long start, long end) throws OperationError;
 
 		// 根据查询条件查询特定的站点或车辆、电池
-        StationsInfo queryStations(StationQueryCondition c);
-        DepotsInfo queryDepots(DepotQueryCondition c);
-        BatteriesInfo queryBatteries(BatteryQueryCondition c);
-        VehiclesInfo queryVehicles(VehicleQueryCondition c);
+        StationsInfo queryStations(StationQueryCondition c) throws OperationError;
+        DepotsInfo queryDepots(DepotQueryCondition c) throws OperationError;
+        BatteriesInfo queryBatteries(BatteryQueryCondition c) throws OperationError;
+        VehiclesInfo queryVehicles(VehicleQueryCondition c) throws OperationError;
 
         // 注册加电站或充电站。注册时，传入站点信息后，服务器返回站点ID
-        string registerStation(StationInfo info);
-        string registerDepot(DepotInfo info);
-        void unregisterStation(string stationID);
-        void setStation(string stationID, StationInfo info);
-        void unregisterDepot(string depotID);
-        void setDepot(string stationID, DepotInfo info);
+        string registerStation(StationInfo info) throws OperationError;
+        string registerDepot(DepotInfo info) throws OperationError;
+        void unregisterStation(string stationID) throws OperationError;
+        void setStation(string stationID, StationInfo info) throws OperationError;
+        void unregisterDepot(string depotID) throws OperationError;
+        void setDepot(string stationID, DepotInfo info) throws OperationError;
+        
+        // 设置系统属性
+        //设置换电池的单位价格，暂时简单处理认为全局采用统一价格
+        void setUnitPrice(double price) throws OperationError;			
+        //设置充电的单位价格，暂时简单处理认为全局采用统一价格
+        void setUnitChargePrice(double price) throws OperationError;		
     };  // interface ClientService
 };	// module slice
 };  // module rpc

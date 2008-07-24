@@ -13,90 +13,156 @@ package autoflash.rpc.slice;
 
 public interface ClientServicePrx extends Ice.ObjectPrx
 {
-    public double rentBattery(String stationID, String vehicleID, String batteryID, double amount);
-    public double rentBattery(String stationID, String vehicleID, String batteryID, double amount, java.util.Map<String, String> __ctx);
+    public double rentBattery(String stationID, String vehicleID, String batteryID, double amount)
+        throws OperationError;
+    public double rentBattery(String stationID, String vehicleID, String batteryID, double amount, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public double returnBattery(String stationID, String vechildID, String batteryID, double amount);
-    public double returnBattery(String stationID, String vechildID, String batteryID, double amount, java.util.Map<String, String> __ctx);
+    public double returnBattery(String stationID, String vechildID, String batteryID, double amount)
+        throws OperationError;
+    public double returnBattery(String stationID, String vechildID, String batteryID, double amount, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void moveBatteryToStation(String stationID, String batteryID);
-    public void moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx);
+    public void moveBatteryToStation(String stationID, String batteryID)
+        throws OperationError;
+    public void moveBatteryToStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void moveBatteryFromStation(String stationID, String batteryID);
-    public void moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx);
+    public void moveBatteryFromStation(String stationID, String batteryID)
+        throws OperationError;
+    public void moveBatteryFromStation(String stationID, String batteryID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void reportDamagedBattery(String stationID, String batteryID);
-    public void reportDamagedBattery(String stationID, String batteryID, java.util.Map<String, String> __ctx);
+    public void reportDamagedBattery(String stationID, String batteryID)
+        throws OperationError;
+    public void reportDamagedBattery(String stationID, String batteryID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public String registerVehicle(String stationID, VehicleInfo info);
-    public String registerVehicle(String stationID, VehicleInfo info, java.util.Map<String, String> __ctx);
+    public String registerVehicle(String stationID, VehicleInfo info)
+        throws OperationError;
+    public String registerVehicle(String stationID, VehicleInfo info, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void openStation(String stationID);
-    public void openStation(String stationID, java.util.Map<String, String> __ctx);
+    public void openStation(String stationID)
+        throws OperationError;
+    public void openStation(String stationID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void closeStation(String stationID);
-    public void closeStation(String stationID, java.util.Map<String, String> __ctx);
+    public void closeStation(String stationID)
+        throws OperationError;
+    public void closeStation(String stationID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void moveBatteryToDepot(String depotID, String batteryID);
-    public void moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx);
+    public void moveBatteryToDepot(String depotID, String batteryID)
+        throws OperationError;
+    public void moveBatteryToDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void moveBatteryFromDepot(String depotID, String batteryID);
-    public void moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx);
+    public void moveBatteryFromDepot(String depotID, String batteryID)
+        throws OperationError;
+    public void moveBatteryFromDepot(String depotID, String batteryID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void charge(String depotID, String batteryID, double currentAmount, double useAmount);
-    public void charge(String depotID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx);
+    public void charge(String depotID, String batteryID, double currentAmount, double useAmount)
+        throws OperationError;
+    public void charge(String depotID, String batteryID, double currentAmount, double useAmount, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void discard(String depotID, String batteryID);
-    public void discard(String depotID, String batteryID, java.util.Map<String, String> __ctx);
+    public void discard(String depotID, String batteryID)
+        throws OperationError;
+    public void discard(String depotID, String batteryID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void openDepot(String depotID);
-    public void openDepot(String depotID, java.util.Map<String, String> __ctx);
+    public void openDepot(String depotID)
+        throws OperationError;
+    public void openDepot(String depotID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void closeDepot(String depotID);
-    public void closeDepot(String depotID, java.util.Map<String, String> __ctx);
+    public void closeDepot(String depotID)
+        throws OperationError;
+    public void closeDepot(String depotID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public String purchase(BatteryInfo info);
-    public String purchase(BatteryInfo info, java.util.Map<String, String> __ctx);
+    public String purchase(BatteryInfo info, double price)
+        throws OperationError;
+    public String purchase(BatteryInfo info, double price, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public Activity[] queryActivities(int start, int end);
-    public Activity[] queryActivities(int start, int end, java.util.Map<String, String> __ctx);
+    public Activity[] queryActivities(long start, long end);
+    public Activity[] queryActivities(long start, long end, java.util.Map<String, String> __ctx);
 
-    public Activity[] queryBatteryActivities(String batteryID, int start, int end);
-    public Activity[] queryBatteryActivities(String batteryID, int start, int end, java.util.Map<String, String> __ctx);
+    public Activity[] queryBatteryActivities(String batteryID, long start, long end)
+        throws OperationError;
+    public Activity[] queryBatteryActivities(String batteryID, long start, long end, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public Activity[] queryStationActivities(String staionID, int start, int end);
-    public Activity[] queryStationActivities(String staionID, int start, int end, java.util.Map<String, String> __ctx);
+    public Activity[] queryStationActivities(String staionID, long start, long end)
+        throws OperationError;
+    public Activity[] queryStationActivities(String staionID, long start, long end, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public Activity[] queryDepotActivities(String staionID, int start, int end);
-    public Activity[] queryDepotActivities(String staionID, int start, int end, java.util.Map<String, String> __ctx);
+    public Activity[] queryDepotActivities(String staionID, long start, long end)
+        throws OperationError;
+    public Activity[] queryDepotActivities(String staionID, long start, long end, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public StationInfo[] queryStations(StationQueryCondition c);
-    public StationInfo[] queryStations(StationQueryCondition c, java.util.Map<String, String> __ctx);
+    public StationInfo[] queryStations(StationQueryCondition c)
+        throws OperationError;
+    public StationInfo[] queryStations(StationQueryCondition c, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public DepotInfo[] queryDepots(DepotQueryCondition c);
-    public DepotInfo[] queryDepots(DepotQueryCondition c, java.util.Map<String, String> __ctx);
+    public DepotInfo[] queryDepots(DepotQueryCondition c)
+        throws OperationError;
+    public DepotInfo[] queryDepots(DepotQueryCondition c, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public BatteryInfo[] queryBatteries(BatteryQueryCondition c);
-    public BatteryInfo[] queryBatteries(BatteryQueryCondition c, java.util.Map<String, String> __ctx);
+    public BatteryInfo[] queryBatteries(BatteryQueryCondition c)
+        throws OperationError;
+    public BatteryInfo[] queryBatteries(BatteryQueryCondition c, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public VehicleInfo[] queryVehicles(VehicleQueryCondition c);
-    public VehicleInfo[] queryVehicles(VehicleQueryCondition c, java.util.Map<String, String> __ctx);
+    public VehicleInfo[] queryVehicles(VehicleQueryCondition c)
+        throws OperationError;
+    public VehicleInfo[] queryVehicles(VehicleQueryCondition c, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public String registerStation(StationInfo info);
-    public String registerStation(StationInfo info, java.util.Map<String, String> __ctx);
+    public String registerStation(StationInfo info)
+        throws OperationError;
+    public String registerStation(StationInfo info, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public String registerDepot(DepotInfo info);
-    public String registerDepot(DepotInfo info, java.util.Map<String, String> __ctx);
+    public String registerDepot(DepotInfo info)
+        throws OperationError;
+    public String registerDepot(DepotInfo info, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void unregisterStation(String stationID);
-    public void unregisterStation(String stationID, java.util.Map<String, String> __ctx);
+    public void unregisterStation(String stationID)
+        throws OperationError;
+    public void unregisterStation(String stationID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void setStation(String stationID, StationInfo info);
-    public void setStation(String stationID, StationInfo info, java.util.Map<String, String> __ctx);
+    public void setStation(String stationID, StationInfo info)
+        throws OperationError;
+    public void setStation(String stationID, StationInfo info, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void unregisterDepot(String depotID);
-    public void unregisterDepot(String depotID, java.util.Map<String, String> __ctx);
+    public void unregisterDepot(String depotID)
+        throws OperationError;
+    public void unregisterDepot(String depotID, java.util.Map<String, String> __ctx)
+        throws OperationError;
 
-    public void setDepot(String stationID, DepotInfo info);
-    public void setDepot(String stationID, DepotInfo info, java.util.Map<String, String> __ctx);
+    public void setDepot(String stationID, DepotInfo info)
+        throws OperationError;
+    public void setDepot(String stationID, DepotInfo info, java.util.Map<String, String> __ctx)
+        throws OperationError;
+
+    public void setUnitPrice(double price)
+        throws OperationError;
+    public void setUnitPrice(double price, java.util.Map<String, String> __ctx)
+        throws OperationError;
+
+    public void setUnitChargePrice(double price)
+        throws OperationError;
+    public void setUnitChargePrice(double price, java.util.Map<String, String> __ctx)
+        throws OperationError;
 }
