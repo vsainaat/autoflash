@@ -13,24 +13,30 @@ package autoflash.rpc.slice;
 
 public final class Activity implements java.lang.Cloneable
 {
+    public long time;
+
     public ActivityType type;
 
     public String batteryID;
 
+    public String vehicleID;
+
     public String stationOrDepotID;
 
-    public int money;
+    public double price;
 
     public Activity()
     {
     }
 
-    public Activity(ActivityType type, String batteryID, String stationOrDepotID, int money)
+    public Activity(long time, ActivityType type, String batteryID, String vehicleID, String stationOrDepotID, double price)
     {
+        this.time = time;
         this.type = type;
         this.batteryID = batteryID;
+        this.vehicleID = vehicleID;
         this.stationOrDepotID = stationOrDepotID;
-        this.money = money;
+        this.price = price;
     }
 
     public boolean
@@ -51,6 +57,10 @@ public final class Activity implements java.lang.Cloneable
 
         if(_r != null)
         {
+            if(time != _r.time)
+            {
+                return false;
+            }
             if(type != _r.type && type != null && !type.equals(_r.type))
             {
                 return false;
@@ -59,11 +69,15 @@ public final class Activity implements java.lang.Cloneable
             {
                 return false;
             }
+            if(vehicleID != _r.vehicleID && vehicleID != null && !vehicleID.equals(_r.vehicleID))
+            {
+                return false;
+            }
             if(stationOrDepotID != _r.stationOrDepotID && stationOrDepotID != null && !stationOrDepotID.equals(_r.stationOrDepotID))
             {
                 return false;
             }
-            if(money != _r.money)
+            if(price != _r.price)
             {
                 return false;
             }
@@ -78,16 +92,21 @@ public final class Activity implements java.lang.Cloneable
     hashCode()
     {
         int __h = 0;
+        __h = 5 * __h + (int)time;
         __h = 5 * __h + type.hashCode();
         if(batteryID != null)
         {
             __h = 5 * __h + batteryID.hashCode();
         }
+        if(vehicleID != null)
+        {
+            __h = 5 * __h + vehicleID.hashCode();
+        }
         if(stationOrDepotID != null)
         {
             __h = 5 * __h + stationOrDepotID.hashCode();
         }
-        __h = 5 * __h + money;
+        __h = 5 * __h + (int)java.lang.Double.doubleToLongBits(price);
         return __h;
     }
 
@@ -109,18 +128,22 @@ public final class Activity implements java.lang.Cloneable
     public void
     __write(IceInternal.BasicStream __os)
     {
+        __os.writeLong(time);
         type.__write(__os);
         __os.writeString(batteryID);
+        __os.writeString(vehicleID);
         __os.writeString(stationOrDepotID);
-        __os.writeInt(money);
+        __os.writeDouble(price);
     }
 
     public void
     __read(IceInternal.BasicStream __is)
     {
+        time = __is.readLong();
         type = ActivityType.__read(__is);
         batteryID = __is.readString();
+        vehicleID = __is.readString();
         stationOrDepotID = __is.readString();
-        money = __is.readInt();
+        price = __is.readDouble();
     }
 }

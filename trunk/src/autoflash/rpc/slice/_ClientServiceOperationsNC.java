@@ -13,61 +13,95 @@ package autoflash.rpc.slice;
 
 public interface _ClientServiceOperationsNC
 {
-    double rentBattery(String stationID, String vehicleID, String batteryID, double amount);
+    double rentBattery(String stationID, String vehicleID, String batteryID, double amount)
+        throws OperationError;
 
-    double returnBattery(String stationID, String vechildID, String batteryID, double amount);
+    double returnBattery(String stationID, String vechildID, String batteryID, double amount)
+        throws OperationError;
 
-    void moveBatteryToStation(String stationID, String batteryID);
+    void moveBatteryToStation(String stationID, String batteryID)
+        throws OperationError;
 
-    void moveBatteryFromStation(String stationID, String batteryID);
+    void moveBatteryFromStation(String stationID, String batteryID)
+        throws OperationError;
 
-    void reportDamagedBattery(String stationID, String batteryID);
+    void reportDamagedBattery(String stationID, String batteryID)
+        throws OperationError;
 
-    String registerVehicle(String stationID, VehicleInfo info);
+    String registerVehicle(String stationID, VehicleInfo info)
+        throws OperationError;
 
-    void openStation(String stationID);
+    void openStation(String stationID)
+        throws OperationError;
 
-    void closeStation(String stationID);
+    void closeStation(String stationID)
+        throws OperationError;
 
-    void moveBatteryToDepot(String depotID, String batteryID);
+    void moveBatteryToDepot(String depotID, String batteryID)
+        throws OperationError;
 
-    void moveBatteryFromDepot(String depotID, String batteryID);
+    void moveBatteryFromDepot(String depotID, String batteryID)
+        throws OperationError;
 
-    void charge(String depotID, String batteryID, double currentAmount, double useAmount);
+    void charge(String depotID, String batteryID, double currentAmount, double useAmount)
+        throws OperationError;
 
-    void discard(String depotID, String batteryID);
+    void discard(String depotID, String batteryID)
+        throws OperationError;
 
-    void openDepot(String depotID);
+    void openDepot(String depotID)
+        throws OperationError;
 
-    void closeDepot(String depotID);
+    void closeDepot(String depotID)
+        throws OperationError;
 
-    String purchase(BatteryInfo info);
+    String purchase(BatteryInfo info, double price)
+        throws OperationError;
 
-    Activity[] queryActivities(int start, int end);
+    Activity[] queryActivities(long start, long end);
 
-    Activity[] queryBatteryActivities(String batteryID, int start, int end);
+    Activity[] queryBatteryActivities(String batteryID, long start, long end)
+        throws OperationError;
 
-    Activity[] queryStationActivities(String staionID, int start, int end);
+    Activity[] queryStationActivities(String staionID, long start, long end)
+        throws OperationError;
 
-    Activity[] queryDepotActivities(String staionID, int start, int end);
+    Activity[] queryDepotActivities(String staionID, long start, long end)
+        throws OperationError;
 
-    StationInfo[] queryStations(StationQueryCondition c);
+    StationInfo[] queryStations(StationQueryCondition c)
+        throws OperationError;
 
-    DepotInfo[] queryDepots(DepotQueryCondition c);
+    DepotInfo[] queryDepots(DepotQueryCondition c)
+        throws OperationError;
 
-    BatteryInfo[] queryBatteries(BatteryQueryCondition c);
+    BatteryInfo[] queryBatteries(BatteryQueryCondition c)
+        throws OperationError;
 
-    VehicleInfo[] queryVehicles(VehicleQueryCondition c);
+    VehicleInfo[] queryVehicles(VehicleQueryCondition c)
+        throws OperationError;
 
-    String registerStation(StationInfo info);
+    String registerStation(StationInfo info)
+        throws OperationError;
 
-    String registerDepot(DepotInfo info);
+    String registerDepot(DepotInfo info)
+        throws OperationError;
 
-    void unregisterStation(String stationID);
+    void unregisterStation(String stationID)
+        throws OperationError;
 
-    void setStation(String stationID, StationInfo info);
+    void setStation(String stationID, StationInfo info)
+        throws OperationError;
 
-    void unregisterDepot(String depotID);
+    void unregisterDepot(String depotID)
+        throws OperationError;
 
-    void setDepot(String stationID, DepotInfo info);
+    void setDepot(String stationID, DepotInfo info)
+        throws OperationError;
+
+    void setUnitPrice(double price)
+        throws OperationError;
+
+    void setUnitChargePrice(double price)
+        throws OperationError;
 }

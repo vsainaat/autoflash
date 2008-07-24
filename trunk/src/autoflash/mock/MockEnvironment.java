@@ -14,12 +14,11 @@ import org.apache.log4j.PatternLayout;
 
 import autoflash.rpc.slice.*;
 
-
 /**
  * 模拟一个应用场景，我们保证有多个加电站、多部车辆和多个电池，并保证至少有一个充电站。
  */
 public class MockEnvironment {
-	
+
 	// 子类MockTransfer模拟电池在加电站和充电站之间的流动， 目前不考虑加电站和充电站的存储容量。
 	static class MockTransfer extends Thread {
 
@@ -30,12 +29,11 @@ public class MockEnvironment {
 				log("MockTransfer starts.");
 				StationInfo[] ssinfo = MockService.queryAllStations();
 				DepotInfo dinfo = MockService.queryAllDepots()[0];
-				Random rand = new Random();
 
 				BatteryQueryCondition c = MockService.makeQueryAllBatteryCondition();
-				
+
 				while (true) {
-					//log("MockTransfer checks.");
+					// log("MockTransfer checks.");
 					// 寻找各个加电站中换下来的空电池并运送到充电站充电。
 					for (StationInfo si : ssinfo) {
 						c.state = BatteryState.Empty;
@@ -50,14 +48,14 @@ public class MockEnvironment {
 						}
 					}
 					Thread.sleep(1000);
-					
+
 					// 寻找充电站中充满的电池，随机运送到各个加电站
 					c.state = BatteryState.Charged;
 					c.depotID = dinfo.ID;
 					c.stationID = "";
 					BatteryInfo[] binfo = service_.queryBatteries(c);
 					for (BatteryInfo bi : binfo) {
-						int sindex = rand.nextInt(ssinfo.length);
+						int sindex = rand_.nextInt(ssinfo.length);
 						service_.moveBatteryFromDepot(dinfo.ID, bi.ID);
 						service_.moveBatteryToStation(ssinfo[sindex].ID, bi.ID);
 						log("MockTransfer supply battery[%s] to station[%s].", bi.ID, ssinfo[sindex].ID);
@@ -69,39 +67,41 @@ public class MockEnvironment {
 				System.exit(1);
 			}
 		}
-	}	// class MockTransfer
+	} // class MockTransfer
 
 	// 子类MockVehicle模拟一部车辆，随机进行换电池的操作
 	static class MockVehicle extends Thread {
-		private String vehicleID_;			//这部车辆的ID
-		private String batteryID_ = "";		//在车辆上的电池的ID，初始时为空
+		private String vehicleID_; // 这部车辆的ID
+
+		private String batteryID_ = ""; // 在车辆上的电池的ID，初始时为空
+
+		private static Object obj = new Object();
 
 		public MockVehicle(String ID) {
 			vehicleID_ = ID;
 		}
-		
+
 		// 更换电池
-		public void changeBattery(StationInfo[] ss) {
-			Random rand = new Random();
-			int sindex = rand.nextInt(ss.length); 
+		public void changeBattery(StationInfo[] ss) throws OperationError {
+			int sindex = rand_.nextInt(ss.length);
 			BatteryQueryCondition c = MockService.makeQueryAllBatteryCondition();
 			c.stationID = ss[sindex].ID;
 			c.state = BatteryState.Charged;
-			BatteryInfo[] binfo = service_.queryBatteries(c);
-			if (binfo.length == 0) {
-				log("Vehicle[%s] find no avaiable battery in station[%s].", vehicleID_, ss[sindex].ID);
-				return;
+			synchronized (obj) {
+				BatteryInfo[] binfo = service_.queryBatteries(c);
+				if (binfo.length == 0) {
+					log("Vehicle[%s] find no avaiable battery in station[%s].", vehicleID_, ss[sindex].ID);
+					return;
+				}
+				double m = 0;
+				if (batteryID_.length() > 0) {
+					m += service_.returnBattery(ss[sindex].ID, vehicleID_, batteryID_, rand_.nextDouble() * 30.0);
+				}
+				m += service_.rentBattery(ss[sindex].ID, vehicleID_, binfo[0].ID, binfo[0].model.capacity);
+				log("Vehicle[%s] change battery[%s -> %s] in station[%s], pay %f.", vehicleID_, batteryID_,
+						binfo[0].ID, ss[sindex].ID, m);
+				batteryID_ = binfo[0].ID;
 			}
-			double m = 0;
-			if (batteryID_.length() > 0) {
-				m -= service_.returnBattery(ss[sindex].ID, vehicleID_, batteryID_, rand.nextDouble() * 30.0);
-			}
-			// TODO: 随机选取电池，存在冲突的可能
-			int bindex = rand.nextInt(binfo.length);
-			m += service_.rentBattery(ss[sindex].ID, vehicleID_, binfo[bindex].ID, binfo[0].model.capacity);
-			log("Vehicle[%s] change battery[%s -> %s] in station[%s], pay %f.", vehicleID_,
-					batteryID_, binfo[bindex].ID, ss[sindex].ID, m);
-			batteryID_ = binfo[bindex].ID;
 		}
 
 		// 随机间隔一段时间后更换电池
@@ -119,10 +119,10 @@ public class MockEnvironment {
 				System.exit(1);
 			}
 		}
-	}	// class MockVehicle
+	} // class MockVehicle
 
 	// 运行模拟环境，首先为环境添加足够的加电站、充电站、车辆、电池，然后启动模拟运输和模拟车辆。
-	void mock() {
+	void mock() throws OperationError {
 		StationInfo[] sinfo = MockService.queryAllStations();
 		VehicleInfo[] vinfo = MockService.queryAllVehicles();
 		DepotInfo[] dinfo = MockService.queryAllDepots();
@@ -166,7 +166,7 @@ public class MockEnvironment {
 		if (binfo.length < MIN_BATTERY_NUM) {
 			log("Purchase " + MIN_BATTERY_NUM + " batteries.");
 			for (int i = 0; i < MIN_BATTERY_NUM; ++i) {
-				String batteryID = service_.purchase(MockService.makeMockBattery());
+				String batteryID = service_.purchase(MockService.makeMockBattery(), 10000);
 				service_.moveBatteryToDepot(dinfo[0].ID, batteryID);
 				service_.charge(dinfo[0].ID, batteryID, 100, 100);
 			}
@@ -178,13 +178,13 @@ public class MockEnvironment {
 		for (int i = 0; i < vinfo.length; ++i)
 			new MockVehicle(vinfo[i].ID).start();
 	}
-	
-	//记日志，同时在屏幕输出并记入文件
+
+	// 记日志，同时在屏幕输出并记入文件
 	static void log(String format, Object... args) {
 		logger.info(new Formatter().format(format, args));
 	}
 
-	static Logger logger = Logger.getLogger("autoflash MockEnvironment");
+	static Logger logger = Logger.getLogger("MockEnvironment");
 	static {
 		Layout layout = new PatternLayout("%d [%c] %p - %m\n");
 		logger.addAppender(new ConsoleAppender(layout));
@@ -198,14 +198,15 @@ public class MockEnvironment {
 		}
 		logger.addAppender(rfa);
 	}
-	
-	
+
 	static private autoflash.rpc.slice.ClientServicePrx service_ = ClientProxy.service();
+	static private Random rand_ = new Random();
 
 	/**
 	 * @param args
+	 * @throws OperationError 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws OperationError {
 		// TODO Auto-generated method stub
 		(new MockEnvironment()).mock();
 	}
