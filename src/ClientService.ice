@@ -36,7 +36,7 @@ module slice{
         string address;
         Point position; 
         int capacity;			// 可存储的电池数
-        string owner;
+        string owner;			// 拥有者
         double chargePrice;		// 充电价格，暂时不用于计价
         double rentPrice;		// 场地租金
     };
@@ -49,16 +49,16 @@ module slice{
         double chargePrice;		// 充电价格
         int storageCapacity;	// 可存储的电池数
         int chargeCapacity;		// 可同时充电的电池数
-        string owner;
+        string owner;			// 拥有者
         double rentPrice;		// 场地租金
     };
     sequence<DepotInfo> DepotsInfo;
 
     struct VehicleInfo {
         string ID;				// 考虑到某些车辆可能没有车牌（如新车），因此使用ID统一标示车辆
-		string licence;			// 车牌号
-        string owner;
-        string model;
+		string license;			// 车牌号
+        string owner;			// 车主姓名
+        string model;			// 车型
     };
     sequence<VehicleInfo> VehiclesInfo;
 
@@ -74,41 +74,45 @@ module slice{
 
 	// 在以下的充电条件中，一些条件可忽略，比如对于代表ID的string，空串表明忽略此条件。
     struct BatteryQueryCondition {
-        BatteryModel model;		// 查询特定型号的电池
+    	string batteryID;		// 查询特定电池
+        BatteryModel model;		// 查询特定型号的电池，空串表示忽略
         BatteryState state;		// 查询特定状态的电池
-        int minShippedDate;		// 查询迟于特定日期购买的电池
-        int maxShippedDate;		// 查询早于特定日期购买的电池
+        long minShippedDate;	// 查询迟于特定日期购买的电池
+        long maxShippedDate;	// 查询早于特定日期购买的电池
         int minChargeRounds;	// 查询充电次数大于特定值的电池
         int maxChargeRounds;	// 查询充电次数小于特定值的电池
-        string stationID;  		// 查询目前位于某加电站内的电池
-        string depotID;    		// 查询目前位于某充电站内的电池
-        string vehicleID;  		// 查询目前位于某个车辆上的电池
+        string stationID;  		// 查询目前位于某加电站内的电池，空串表示忽略
+        string depotID;    		// 查询目前位于某充电站内的电池，空串表示忽略
+        string vehicleID;  		// 查询目前位于某个车辆上的电池，空串表示忽略
     };
 
     struct StationQueryCondition {
         Area region;			// 查询位于某个区域内的站点
-        string stationID;  		// 查询具有特定ID的站点
+        string stationID;  		// 查询具有特定ID的站点，空串表示忽略
         OpenStatus status;		// 查询目前开放或关闭的站点
-        string owner;			// 查询特定拥有人的站点
+        string owner;			// 查询特定拥有人的站点，空串表示忽略
         int minCapacity;		// 查询容量大于特定值的站点
         int maxCapacity;		// 查询容量小于特定值的站点
     };
     struct DepotQueryCondition {
         Area region;			// 查询位于某个区域内的站点
-        string depotID;    		// 查询具有特定ID的站点
+        string depotID;    		// 查询具有特定ID的站点，空串表示忽略
         OpenStatus status;		// 查询目前开放或关闭的站点
-        string owner;			// 查询特定拥有人的站点
+        string owner;			// 查询特定拥有人的站点，空串表示忽略
         int minStorageCapacity;	// 查询存储容量大于特定值的站点
         int maxStorageCapacity;	// 查询存储容量小于特定值的站点
         int minChargeCapacity;	// 查询充电容量大于特定值的站点
         int maxChargeCapacity;	// 查询充电容量小于特定值的站点
     };
     struct VehicleQueryCondition {
-        string model;			// 查询某个型号的车辆
-        int minChargeDate;		// 查询上次加电不早于特定日期的车辆
-        int maxChargeDate;		// 查询上次加电不晚于特定日期的车辆
-        int batteryNum;			// 查询目前租用特定书目电池的车辆
-        string batteryID;		// 查询目前某个电池所位于的车辆
+        string model;			// 查询某个型号的车辆，空串表示忽略
+        long minChargeDate;		// 查询上次加电不早于特定日期的车辆
+        long maxChargeDate;		// 查询上次加电不晚于特定日期的车辆
+        int batteryNum;			// 查询目前租用特定数目电池的车辆，-1表示忽略
+        string batteryID;		// 查询目前某个电池所位于的车辆,空串表示忽略
+        string license;			// 查询特定车牌的车辆，空串表示忽略
+        string vehicleID;		// 查询特定ID的车辆，空串表示忽略
+        string owner;			// 查询特定车主的车辆，空串表示忽略
     };
     
     enum ActivityType { Rent, Return, MoveFromStation, MoveToStation, MoveFromDepot, MoveToDepot, 

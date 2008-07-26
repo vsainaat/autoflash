@@ -15,7 +15,7 @@ public final class VehicleInfo implements java.lang.Cloneable
 {
     public String ID;
 
-    public String licence;
+    public String license;
 
     public String owner;
 
@@ -25,10 +25,10 @@ public final class VehicleInfo implements java.lang.Cloneable
     {
     }
 
-    public VehicleInfo(String ID, String licence, String owner, String model)
+    public VehicleInfo(String ID, String license, String owner, String model)
     {
         this.ID = ID;
-        this.licence = licence;
+        this.license = license;
         this.owner = owner;
         this.model = model;
     }
@@ -55,7 +55,7 @@ public final class VehicleInfo implements java.lang.Cloneable
             {
                 return false;
             }
-            if(licence != _r.licence && licence != null && !licence.equals(_r.licence))
+            if(license != _r.license && license != null && !license.equals(_r.license))
             {
                 return false;
             }
@@ -82,9 +82,9 @@ public final class VehicleInfo implements java.lang.Cloneable
         {
             __h = 5 * __h + ID.hashCode();
         }
-        if(licence != null)
+        if(license != null)
         {
-            __h = 5 * __h + licence.hashCode();
+            __h = 5 * __h + license.hashCode();
         }
         if(owner != null)
         {
@@ -116,7 +116,7 @@ public final class VehicleInfo implements java.lang.Cloneable
     __write(IceInternal.BasicStream __os)
     {
         __os.writeString(ID);
-        __os.writeString(licence);
+        __os.writeString(license);
         __os.writeString(owner);
         __os.writeString(model);
     }
@@ -125,7 +125,7 @@ public final class VehicleInfo implements java.lang.Cloneable
     __read(IceInternal.BasicStream __is)
     {
         ID = __is.readString();
-        licence = __is.readString();
+        license = __is.readString();
         owner = __is.readString();
         model = __is.readString();
     }

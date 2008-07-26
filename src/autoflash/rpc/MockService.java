@@ -74,7 +74,7 @@ public class MockService {
 	public static VehicleInfo makeMockVehicle() {
 		VehicleInfo info = new VehicleInfo();
 		info.model = "benz";
-		info.licence = ((Integer) (rand_.nextInt(888888) + 111111)).toString();
+		info.license = "L" + rand_.nextInt(888888) + 111111;
 		info.ID = "unknown";
 		return info;
 	}
@@ -88,7 +88,7 @@ public class MockService {
 		c.region.topLeftCorner.longitude = -9999;
 		c.region.latitudeSpan = 9999 * 2;
 		c.region.longitudeSpan = 9999 * 2;
-		c.maxCapacity = -1;
+		c.maxCapacity = Integer.MAX_VALUE;
 		c.minCapacity = -1;
 		c.owner = "";
 		c.stationID = "";
@@ -100,10 +100,13 @@ public class MockService {
 	public static VehicleInfo[] queryAllVehicles() throws OperationError {
 		VehicleQueryCondition c = new VehicleQueryCondition();
 		c.minChargeDate = 0;
-		c.maxChargeDate = 99999;
+		c.maxChargeDate = new Date().getTime();
 		c.batteryNum = -1;
 		c.model = "";
 		c.batteryID = "";
+		c.owner = "";
+		c.vehicleID = "";
+		c.model = "";
 		return service_.queryVehicles(c);
 	}
 
@@ -116,10 +119,10 @@ public class MockService {
 		c.region.topLeftCorner.longitude = -9999;
 		c.region.latitudeSpan = 9999 * 2;
 		c.region.longitudeSpan = 9999 * 2;
-		c.maxChargeCapacity = -1;
+		c.maxChargeCapacity = Integer.MAX_VALUE;
 		c.minChargeCapacity = -1;
-		c.minChargeCapacity = -1;
-		c.maxChargeCapacity = -1;
+		c.minStorageCapacity = -1;
+		c.maxStorageCapacity = Integer.MAX_VALUE;
 		c.owner = "";
 		c.depotID = "";
 		c.status = OpenStatus.OpenOrClosed;
@@ -136,9 +139,9 @@ public class MockService {
 		BatteryQueryCondition c = new BatteryQueryCondition();
 		c.model = new BatteryModel();
 		c.model.name = "";
-		c.maxChargeRounds = -1;
+		c.maxChargeRounds = Integer.MAX_VALUE;
 		c.depotID = "";
-		c.maxShippedDate = 99999;
+		c.maxShippedDate = new Date().getTime();
 		c.minChargeRounds = -1;
 		c.minShippedDate = 0;
 		c.stationID = "";
