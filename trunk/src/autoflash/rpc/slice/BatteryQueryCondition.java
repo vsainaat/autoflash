@@ -13,13 +13,15 @@ package autoflash.rpc.slice;
 
 public final class BatteryQueryCondition implements java.lang.Cloneable
 {
+    public String batteryID;
+
     public BatteryModel model;
 
     public BatteryState state;
 
-    public int minShippedDate;
+    public long minShippedDate;
 
-    public int maxShippedDate;
+    public long maxShippedDate;
 
     public int minChargeRounds;
 
@@ -35,8 +37,9 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
     {
     }
 
-    public BatteryQueryCondition(BatteryModel model, BatteryState state, int minShippedDate, int maxShippedDate, int minChargeRounds, int maxChargeRounds, String stationID, String depotID, String vehicleID)
+    public BatteryQueryCondition(String batteryID, BatteryModel model, BatteryState state, long minShippedDate, long maxShippedDate, int minChargeRounds, int maxChargeRounds, String stationID, String depotID, String vehicleID)
     {
+        this.batteryID = batteryID;
         this.model = model;
         this.state = state;
         this.minShippedDate = minShippedDate;
@@ -66,6 +69,10 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
 
         if(_r != null)
         {
+            if(batteryID != _r.batteryID && batteryID != null && !batteryID.equals(_r.batteryID))
+            {
+                return false;
+            }
             if(model != _r.model && model != null && !model.equals(_r.model))
             {
                 return false;
@@ -113,10 +120,14 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
     hashCode()
     {
         int __h = 0;
+        if(batteryID != null)
+        {
+            __h = 5 * __h + batteryID.hashCode();
+        }
         __h = 5 * __h + model.hashCode();
         __h = 5 * __h + state.hashCode();
-        __h = 5 * __h + minShippedDate;
-        __h = 5 * __h + maxShippedDate;
+        __h = 5 * __h + (int)minShippedDate;
+        __h = 5 * __h + (int)maxShippedDate;
         __h = 5 * __h + minChargeRounds;
         __h = 5 * __h + maxChargeRounds;
         if(stationID != null)
@@ -152,10 +163,11 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
     public void
     __write(IceInternal.BasicStream __os)
     {
+        __os.writeString(batteryID);
         model.__write(__os);
         state.__write(__os);
-        __os.writeInt(minShippedDate);
-        __os.writeInt(maxShippedDate);
+        __os.writeLong(minShippedDate);
+        __os.writeLong(maxShippedDate);
         __os.writeInt(minChargeRounds);
         __os.writeInt(maxChargeRounds);
         __os.writeString(stationID);
@@ -166,11 +178,12 @@ public final class BatteryQueryCondition implements java.lang.Cloneable
     public void
     __read(IceInternal.BasicStream __is)
     {
+        batteryID = __is.readString();
         model = new BatteryModel();
         model.__read(__is);
         state = BatteryState.__read(__is);
-        minShippedDate = __is.readInt();
-        maxShippedDate = __is.readInt();
+        minShippedDate = __is.readLong();
+        maxShippedDate = __is.readLong();
         minChargeRounds = __is.readInt();
         maxChargeRounds = __is.readInt();
         stationID = __is.readString();
