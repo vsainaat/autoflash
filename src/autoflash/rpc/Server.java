@@ -190,10 +190,12 @@ public class Server extends autoflash.rpc.slice._ClientServiceDisp {
 	
 	public void setUnitChargePrice(double price, Current __current) {
 		log("Set unit charge price to " + price);
+		service_.setUnitChargePrice(price);
 	}
 
 	public void setUnitPrice(double price, Current __current) {
 		log("Set unit charge price to " + price);
+		service_.setUnitPrice(price);
 	}
 	
 	//记日志，同时在屏幕输出并记入文件
@@ -230,6 +232,7 @@ public class Server extends autoflash.rpc.slice._ClientServiceDisp {
 			adapter.add(object, ic.stringToIdentity("ClientService"));
 			adapter.activate();
 			System.out.println("ClientService started.");
+			System.out.println("服务器已启动.");
 			ic.waitForShutdown();
 		} catch (Exception e) {
 			logger.fatal("Catch Exception:", e);

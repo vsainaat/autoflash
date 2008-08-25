@@ -147,6 +147,7 @@ public class MockCoreService {
 		long t = new Date().getTime();
 		cVehicles_.get(vehicleID).lastChargeDate = t;
 		double price = amount * unitPrice;
+		logdebug("Vehicle %s has %d batteries on board.", vehicleID, cVehicles_.get(vehicleID).batteries.size());
 		history.add(new Activity(t, ActivityType.Rent, batteryID, vehicleID, stationID, price));
 		return price;
 	}
@@ -213,12 +214,14 @@ public class MockCoreService {
 	}
 
 	public void openStation(String stationID) {
+		if (cStations_.get(stationID).isOpen) return;
 		cStations_.get(stationID).isOpen = true;
 		history.add(new Activity(new Date().getTime(), ActivityType.OpenStation, "", "", stationID, 0));
 		// logdebug("Station %s opens.", stationID);
 	}
 
 	public void closeStation(String stationID) {
+		if (!cStations_.get(stationID).isOpen) return;
 		cStations_.get(stationID).isOpen = false;
 		history.add(new Activity(new Date().getTime(), ActivityType.CloseStation, "", "", stationID, 0));
 		// logdebug("Station %s closes.", stationID);
@@ -262,13 +265,15 @@ public class MockCoreService {
 	}
 
 	public void openDepot(String depotID) {
+		if (cDepots_.get(depotID).isOpen) return;
 		cDepots_.get(depotID).isOpen = true;
-		history.add(new Activity(new Date().getTime(), ActivityType.Discard, "", "", depotID, 0));
+		history.add(new Activity(new Date().getTime(), ActivityType.OpenDepot, "", "", depotID, 0));
 	}
 
 	public void closeDepot(String depotID) {
+		if (!cDepots_.get(depotID).isOpen) return;
 		cDepots_.get(depotID).isOpen = false;
-		history.add(new Activity(new Date().getTime(), ActivityType.Discard, "", "", depotID, 0));
+		history.add(new Activity(new Date().getTime(), ActivityType.CloseDepot, "", "", depotID, 0));
 	}
 
 	public String purchase(BatteryInfo info, double price) {
@@ -287,22 +292,28 @@ public class MockCoreService {
 	}
 
 	public Activity[] queryActivities(long start, long end) {
+		if (end < start) return new Activity[0];
 		Activity startActivity = new Activity();
 		startActivity.time = start;
 		Activity endActivity = new Activity();
 		endActivity.time = end;
 		int sindex = Collections.binarySearch(history, startActivity, new Comparator<Activity>() {
 			public int compare(Activity o1, Activity o2) {
-				return (int) (o1.time - o2.time);
+				if (o1.time == o2.time) return 0;
+				else if (o1.time > o2.time) return 1;
+				else return -1;
 			}
 		});
 		int eindex = Collections.binarySearch(history, endActivity, new Comparator<Activity>() {
 			public int compare(Activity o1, Activity o2) {
-				return (int) (o1.time - o2.time);
+				if (o1.time == o2.time) return 0;
+				else if (o1.time > o2.time) return 1;
+				else return -1;
 			}
 		});
 		if (sindex < 0) sindex = -sindex -1;
 		if (eindex < 0) eindex = -eindex -1;
+		assert sindex <= eindex;
 		logdebug(history.size() + " :from " + sindex + " to " + eindex);
 		return history.subList(sindex, eindex).toArray(new Activity[0]);
 	}
@@ -383,31 +394,48 @@ public class MockCoreService {
 		Iterator<BatteryStatus> iter = cBatteries_.values().iterator();
 		while (iter.hasNext()) {
 			BatteryStatus ss = iter.next();
-			if (c.batteryID != "" && !ss.info.ID.equals(c.batteryID)) continue;
-			if (c.vehicleID != "" && cVehicles_.containsKey(c.vehicleID)
-					&& !cVehicles_.get(c.vehicleID).batteries.contains(c.vehicleID)) continue;
-			if (c.maxChargeRounds < ss.chargeRound || c.minChargeRounds > ss.chargeRound) continue;
-			if (c.maxShippedDate < ss.info.shippedDate || c.minShippedDate > ss.info.shippedDate) continue;
-			if (c.model.name != "" && !ss.info.model.name.equals(c.model.name)) continue;
+			if (c.batteryID != "" && !ss.info.ID.equals(c.batteryID)) {
+				System.out.println("skip batteryID");
+				continue;
+			}
+			if (c.vehicleID != "" && !(cVehicles_.containsKey(c.vehicleID)
+					&& cVehicles_.get(c.vehicleID).batteries.contains(ss.info.ID))) {
+				System.out.println("skip " + ss.info.ID + " " + cVehicles_.get(c.vehicleID).batteries);
+				System.out.println((cVehicles_.containsKey(c.vehicleID)));
+				System.out.println(cVehicles_.get(c.vehicleID).batteries.contains(c.vehicleID));
+				continue;
+			}
+			if (c.maxChargeRounds < ss.chargeRound || c.minChargeRounds > ss.chargeRound) {
+				System.out.println("skip charge rounds");
+				continue;
+			}
+			if (c.maxShippedDate < ss.info.shippedDate || c.minShippedDate > ss.info.shippedDate) {
+				System.out.println("skip shipped date");
+				continue;
+			}
+			if (c.model.name != "" && !ss.info.model.name.equals(c.model.name)) {
+				System.out.println("skip model");
+				continue;
+			}
 			if (c.state != BatteryState.Arbitrary && c.state != ss.state) {
-				// logdebug("Battery " + ss.info.ID +
-				// " violate state condition:" + c.state + " vs " + ss.state);
+				 logdebug("Battery " + ss.info.ID +
+				 " violate state condition:" + c.state + " vs " + ss.state);
 				continue;
 			}
 			if (c.stationID != ""
 					&& (!cStations_.containsKey(c.stationID) || !cStations_.get(c.stationID).batteries
 							.contains(ss.info.ID))) {
-				// logdebug("Battery " + ss.info.ID +
-				// " violate station condition: " + c.stationID + " " +
-				// ss.info.ID);
+				 logdebug("Battery " + ss.info.ID +
+				 " violate station condition: " + c.stationID + " " +
+				 ss.info.ID);
 				// logdebug(cStations_.get(c.stationID).batteries.toString());
 				continue;
 
 			}
 			if (c.depotID != ""
 					&& (!cDepots_.containsKey(c.depotID) || !cDepots_.get(c.depotID).batteries.contains(ss.info.ID))) {
-				// logdebug("Battery " + ss.info.ID +
-				// " violate depot condition: " + c.depotID + " " + ss.info.ID);
+				 logdebug("Battery " + ss.info.ID +
+				 " violate depot condition: " + c.depotID + " " + ss.info.ID);
 				// logdebug(cDepots_.get(c.depotID).batteries.toString());
 				continue;
 			}
@@ -475,6 +503,7 @@ public class MockCoreService {
 		ds.batteries = new HashSet<String>();
 		cDepots_.put(info.ID, ds);
 		logdebug("Register depot : " + info.ID);
+		history.add(new Activity(new Date().getTime(), ActivityType.Register, "", "", info.ID, 0));
 		return info.ID;
 	}
 
@@ -490,6 +519,17 @@ public class MockCoreService {
 		cDepots_.get(depotID).info = info;
 		history.add(new Activity(new Date().getTime(), ActivityType.Set, "", "", depotID, 0));
 	}
+	
+	public void setUnitPrice(double price) {
+		this.unitPrice = price;
+		history.add(new Activity(new Date().getTime(), ActivityType.Set, "", "", "", price));
+	}
+	
+	public void setUnitChargePrice(double price) {
+		this.unitChargePrice = price;
+		history.add(new Activity(new Date().getTime(), ActivityType.Set, "", "", "", price));
+	}
+	
 
 	static void loginfo(String format, Object... args) {
 		logger.info(new Formatter().format(format, args));
