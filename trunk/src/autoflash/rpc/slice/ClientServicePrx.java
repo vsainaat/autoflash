@@ -18,9 +18,9 @@ public interface ClientServicePrx extends Ice.ObjectPrx
     public double rentBattery(String stationID, String vehicleID, String batteryID, double amount, java.util.Map<String, String> __ctx)
         throws OperationError;
 
-    public double returnBattery(String stationID, String vechildID, String batteryID, double amount)
+    public double returnBattery(String stationID, String vehicleID, String batteryID, double amount)
         throws OperationError;
-    public double returnBattery(String stationID, String vechildID, String batteryID, double amount, java.util.Map<String, String> __ctx)
+    public double returnBattery(String stationID, String vehicleID, String batteryID, double amount, java.util.Map<String, String> __ctx)
         throws OperationError;
 
     public void moveBatteryToStation(String stationID, String batteryID)

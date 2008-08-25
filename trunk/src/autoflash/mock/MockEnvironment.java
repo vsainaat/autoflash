@@ -93,25 +93,31 @@ public class MockEnvironment {
 					log("Vehicle[%s] find no avaiable battery in station[%s].", vehicleID_, ss[sindex].ID);
 					return;
 				}
+				
+				c = MockService.makeQueryAllBatteryCondition();
+				c.vehicleID = this.vehicleID_;
+				BatteryInfo[] bs = service_.queryBatteries(c);
+
 				double m = 0;
-				if (batteryID_.length() > 0) {
-					m += service_.returnBattery(ss[sindex].ID, vehicleID_, batteryID_, rand_.nextDouble() * 30.0);
+				for (int i = 0; i < bs.length; ++i) {
+					m += service_.returnBattery(ss[sindex].ID, vehicleID_, bs[i].ID, rand_.nextDouble() * 30.0);
+					batteryID_ = bs[i].ID;
 				}
 				m += service_.rentBattery(ss[sindex].ID, vehicleID_, binfo[0].ID, binfo[0].model.capacity);
+				log("Vehicle[%s] has " + bs.length + " batteries on board.", vehicleID_);
 				log("Vehicle[%s] change battery[%s -> %s] in station[%s], pay %f.", vehicleID_, batteryID_,
 						binfo[0].ID, ss[sindex].ID, m);
-				batteryID_ = binfo[0].ID;
 			}
 		}
 
 		// 随机间隔一段时间后更换电池
 		public void run() {
 			try {
-				Thread.sleep(new Random().nextInt(10000));
+				Thread.sleep(new Random().nextInt(1000));
 				log("Mock Vehicle[%s] starts.", vehicleID_);
 				StationInfo[] ss = MockService.queryAllStations();
 				while (true) {
-					Thread.sleep(new Random().nextInt(10000) + 5000);
+					Thread.sleep(new Random().nextInt(100000) + 5000);
 					changeBattery(ss);
 				}
 			} catch (Exception e) {
@@ -122,7 +128,7 @@ public class MockEnvironment {
 	} // class MockVehicle
 
 	// 运行模拟环境，首先为环境添加足够的加电站、充电站、车辆、电池，然后启动模拟运输和模拟车辆。
-	void mock() throws OperationError {
+	public void mock() throws OperationError {
 		StationInfo[] sinfo = MockService.queryAllStations();
 		VehicleInfo[] vinfo = MockService.queryAllVehicles();
 		DepotInfo[] dinfo = MockService.queryAllDepots();
@@ -152,7 +158,7 @@ public class MockEnvironment {
 			service_.openDepot(info.ID);
 
 		// 确保一定数量的车辆数目
-		final int MIN_VEHICLE_NUM = 100;
+		final int MIN_VEHICLE_NUM = 20;
 		if (vinfo.length < MIN_VEHICLE_NUM) {
 			log("Register " + MIN_VEHICLE_NUM + " vehicles.");
 			for (int i = 0; i < MIN_VEHICLE_NUM; ++i) {
@@ -162,7 +168,7 @@ public class MockEnvironment {
 		}
 
 		// 确保一定数目的电池数目
-		int MIN_BATTERY_NUM = 300;
+		int MIN_BATTERY_NUM = 100;
 		if (binfo.length < MIN_BATTERY_NUM) {
 			log("Purchase " + MIN_BATTERY_NUM + " batteries.");
 			for (int i = 0; i < MIN_BATTERY_NUM; ++i) {
@@ -172,7 +178,6 @@ public class MockEnvironment {
 			}
 			vinfo = MockService.queryAllVehicles();
 		}
-
 		log("Start mock environment.");
 		new MockTransfer().start();
 		for (int i = 0; i < vinfo.length; ++i)

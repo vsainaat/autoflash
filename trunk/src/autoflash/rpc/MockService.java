@@ -106,7 +106,6 @@ public class MockService {
 		c.batteryID = "";
 		c.owner = "";
 		c.vehicleID = "";
-		c.model = "";
 		return service_.queryVehicles(c);
 	}
 
@@ -141,7 +140,7 @@ public class MockService {
 		c.model.name = "";
 		c.maxChargeRounds = Integer.MAX_VALUE;
 		c.depotID = "";
-		c.maxShippedDate = new Date().getTime();
+		c.maxShippedDate = Integer.MAX_VALUE;
 		c.minChargeRounds = -1;
 		c.minShippedDate = 0;
 		c.stationID = "";
