@@ -1,4 +1,4 @@
-package apriori;
+package fk;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
