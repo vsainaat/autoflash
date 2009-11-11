@@ -79,6 +79,6 @@ public class CountOld {
 	    FileInputFormat.addInputPath(job, new Path("/aers"));
 		FileSystem.get(conf).delete(new Path("/prr/count"), true);
 	    FileOutputFormat.setOutputPath(job, new Path("/prr/count"));
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		job.waitForCompletion(true);
 	}
 }

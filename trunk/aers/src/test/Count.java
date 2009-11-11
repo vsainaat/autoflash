@@ -25,7 +25,7 @@ public class Count {
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String[] tokens = value.toString().split("[ \t]+");
-			if (tokens.length > 12) return;  // filter out long transactions
+			if (tokens.length > 16) return;  // filter out long transactions
 			Arrays.sort(tokens);
 			int n = (int)Math.pow(2, tokens.length);
 			for (int i=1; i < n; ++i) {
@@ -67,6 +67,6 @@ public class Count {
 	    FileInputFormat.addInputPath(job, new Path("/aers"));
 		FileSystem.get(conf).delete(new Path("/prr/count"), true);
 	    FileOutputFormat.setOutputPath(job, new Path("/prr/count"));
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		job.waitForCompletion(true);
 	}
 }
