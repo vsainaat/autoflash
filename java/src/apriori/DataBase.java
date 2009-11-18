@@ -13,7 +13,7 @@ public class DataBase {
 	public DataBase(String filename) throws FileNotFoundException{
 		Scanner sc = new Scanner(new FileInputStream(filename));
 		
-		String line = sc.nextLine();
+		String line = null;
 		while (true) {
 			try {
 				line = sc.nextLine();
@@ -36,7 +36,7 @@ public class DataBase {
 	 */
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		new DataBase("f:/data/prr.dat");
+		new DataBase("f:/data/aers.dat");
 
 	}
 

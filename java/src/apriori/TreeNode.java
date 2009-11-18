@@ -61,10 +61,10 @@ public class TreeNode {
 			return children.get(items[start]).getCount(items, start + 1);
 	}
 
+	//对于具有相同parent的叶节点两两连接生成新的候选项集，并测试新候选项集的子项集是否都是频繁项集
 	int grow(int depth, int currentDepth) {
-		// System.out.println(itemset.length+" "+depth);
 		int cnt = 0;
-		if (currentDepth < depth - 1) {
+		if (currentDepth < depth) {
 			for (String item : children.keySet()) {
 				cnt += get(item).grow(depth, currentDepth + 1);
 			}
@@ -74,18 +74,21 @@ public class TreeNode {
 			ArrayList<String> items = new ArrayList<String>();
 			for (String item : children.keySet())
 				items.add(item);
+			List<String> itemset = new LinkedList<String>();
+			System.out.println(items.size());
 			for (int i = 0; i < items.size(); ++i) {
+				itemset.add(items.get(i));
+				System.out.println(i+" "+itemset);
 				for (int j = i + 1; j < items.size(); ++j) {
-					List<String> itemset = new LinkedList<String>();
-					itemset.add(item);
-					itemset.add(items.get(i));
 					itemset.add(items.get(j));
 					if (parent == null || parent.check(itemset))
 					{
 						children.get(items.get(i)).add(items.get(j));
 						cnt++;
 					}
+					itemset.remove(itemset.size()-1);
 				}
+				itemset.remove(itemset.size()-1);
 			}
 		}
 		return cnt;

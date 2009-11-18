@@ -1,68 +1,43 @@
 package apriori;
 
-import java.util.List;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.List;
 
 public class Apriori {
 
 	public DataBase db;
 	public List<ItemSet> fitemsets = new ArrayList<ItemSet>();
-	public final static int minsup = 5;
+	public final static int minsup = 100;
 	public Tree tree = new Tree();
 
-	public Apriori(DataBase db) {
+	public Apriori(DataBase db) throws IOException {
 		this.db = db;
-		Map<String, Integer> item_count = new HashMap<String, Integer>();
-		for (ItemSet transaction : db.transactions) {
-			for (String item : transaction.items) {
-				int cnt = item_count.containsKey(item) ? item_count.get(item)
-						: 0;
-				item_count.put(item, cnt + 1);
-			}
-		}
-		for (String item : item_count.keySet())
-			if (item_count.get(item) >= minsup) {
-				tree.root.add(item);
-				tree.root.get(item).count = item_count.get(item);
-			}
+		tree.init(db, minsup);
+		tree.toFile("tmp.txt");
+		tree = new Tree("tmp.txt");
 	}
 
-	public void run() {
-		while (tree.checkCount(minsup) > 1) {
+	public void run() throws IOException {
+		do  {
 			if (tree.grow() == 0) return;
+			tree.toFile("tmp.txt");
+			tree = new Tree("tmp.txt");
+			tree.toFile("tmp2.txt");
 			db.scan(tree);
-		}
+		} while (tree.checkFrequent(minsup) > 1);
 	}
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 		try {
-			DataBase db = new DataBase("f:/data/prr.dat");
+			DataBase db = new DataBase("f:/data/aers.dat");
 			Apriori apr = new Apriori(db);
 			System.out.println(new Date());
 			apr.run();
 			System.out.println(new Date());
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
 }
