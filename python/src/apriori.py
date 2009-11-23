@@ -21,7 +21,7 @@ def grow(itemsets):
 
 
 def contain(seta, setb):
-	i,j = 1, 0
+	i,j = 0, 0
 	while j < len(setb):
 		if i == len(seta): return False
 		if seta[i] > setb[j]: return False
@@ -30,7 +30,6 @@ def contain(seta, setb):
 	return True
 
 def check(candidates):
-	r = []
 	candidates = map(tuple, candidates)
 	cnt = {}
 	for c in candidates: cnt[c] = 0
@@ -38,34 +37,40 @@ def check(candidates):
 #		print transaction
 		for candidate in candidates:
 #			print transaction, candidate, contain(transaction, candidate)
-			if cnt[candidate] < threshold and contain(transaction, candidate):
+			if contain(transaction, candidate):
 				cnt[candidate] += 1
-				if cnt[candidate] >= threshold:
-					r.append(candidate)
-					print candidate
+	r = []
+	for k in candidates:
+		if cnt[k] >= threshold:
+#			print (k, cnt[k])
+			r.append(k)
 	return r
 
 import time
 print time.asctime()
-for line in open("f:/data/nausea.dat"):
+for line in open("f:/data/aers.dat"):
 	parts = line.split()
-	db.append(parts[:1]+sorted(parts[1:]))
-	for item in db[-1][1:]:
+	
+	db.append(sorted(parts))
+	for item in db[-1]:
 #		print item
 		item_count.setdefault(item, 0)
 		item_count[item] += 1
 		cnt += 1
-threshold = 600	
+threshold = 100
 fitems = [item for item in item_count if item_count[item] >= threshold]
 print len(db)
 print len(fitems)
+for i,c in sorted([(item,item_count[item]) for item in item_count if item_count[item] >= threshold]):
+	print "%s:%d"%(i,c),
+print
 fitemsets = [[item] for item in sorted(fitems)]
-print fitemsets
+#print fitemsets
 
 while len(fitemsets) > 0:
 	candidates = grow(fitemsets)
 	fitemsets = check(candidates)
-	print len(candidates), len(fitemsets), fitemsets
+	print len(candidates), len(fitemsets)#, fitemsets
 	print time.asctime()	
 print contain(['f', 1,2, 3], [1,2,3])
 	
