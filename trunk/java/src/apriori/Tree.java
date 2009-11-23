@@ -14,7 +14,7 @@ import java.util.TreeMap;
 public class Tree {
 	public class TreeNode {
 		String item;
-		int count = 0;
+		public int count = 0;
 		int depth = -1;
 		TreeNode parent;
 		Map<String, TreeNode> children = new TreeMap<String, TreeNode>();
@@ -25,12 +25,12 @@ public class Tree {
 			if (parent != null) depth = parent.depth+1;
 		}
 		
-		void addChild(String item) {
+		public void addChild(String item) {
 			if (!children.containsKey(item))
 				children.put(item, new TreeNode(item, this));
 		}
 
-		TreeNode getChild(String item) {
+		public TreeNode getChild(String item) {
 			assert hasChild(item);
 			return children.get(item);
 		}
@@ -132,7 +132,7 @@ public class Tree {
 					return 0;
 				}
 				else {
-					fk.util.out.printArray(pattern);
+					//fk.util.out.printArray(pattern);
 					return 1;
 				}
 			}
@@ -164,7 +164,7 @@ public class Tree {
 		}
 	}
 
-	Tree() {
+	public Tree() {
 		
 	}
 	
@@ -191,11 +191,14 @@ public class Tree {
 		}
 	}
 	
-	TreeNode root = new TreeNode("", null);
+	public TreeNode root = new TreeNode("", null);
 	int treeDepth = 1;
 
 	void scan(ItemSet transaction) {
 		root.incrCount(transaction.items, 0);
+	}
+	void scan(String[] items) {
+		root.incrCount(items, 0);
 	}
 
 	void print() {
